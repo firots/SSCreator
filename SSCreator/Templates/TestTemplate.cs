@@ -1,10 +1,9 @@
 ﻿using System;
-namespace SSCreator.Templates
+namespace SSCreator
 {
-    public class TestTemplate
+    class TestTemplate: TemplateBase
     {
-        public TestTemplate()
-        {
-        }
+        public override string name => "Test";
+        public override int argCount => 3;
     }
 }

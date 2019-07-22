@@ -1,7 +1,8 @@
 ﻿using System;
-namespace SSCreator.Templates
+namespace SSCreator
 {
-    public struct TemplateManager
+    struct TemplateManager
     {
+        public static readonly TemplateBase[] templates = { new TestTemplate() };
     }
 }

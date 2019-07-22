@@ -10,11 +10,14 @@ namespace SSCreator
 {
     class TemplateBase
     {
-        public static void generate(String templateName, String screenShotFilePath, String savePath)
+        public virtual string name => "Base";
+        public virtual int argCount => 3;
+
+        public virtual void generate(string[] args)
         {
-            String templatePath = getTemplatePath(templateName);
+            string templatePath = getTemplatePath();
             using (Image<Rgba32> template = Image.Load(Path.Combine(templatePath, "base.jpg")))
-            using (Image<Rgba32> screenShot = Image.Load(screenShotFilePath))
+            using (Image<Rgba32> screenShot = Image.Load(args[1]))
             using (Image<Rgba32> outputImage = new Image<Rgba32>(1242, 2688))
             {
                 screenShot.Mutate(o => o.Resize(new Size(570, 994)));
@@ -22,15 +25,15 @@ namespace SSCreator
                     .DrawImage(template, new Point(0, 0), 1f)
                     .DrawImage(screenShot, new Point(335, 339), 1f)
                 );
-                outputImage.Save(savePath);
+                outputImage.Save(args[2]);
             }
         }
 
-        private static String getTemplatePath(String templateName)
+        private string getTemplatePath()
         {
-            String temps = "SSCreatorFiles/Templates";
-            String home = System.Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            return Path.Combine(home, temps, templateName);
+            string temps = "SSCreatorFiles/Templates";
+            string home = System.Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            return Path.Combine(home, temps, this.name);
         }
     }
 }
