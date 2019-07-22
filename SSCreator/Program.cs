@@ -7,7 +7,7 @@ namespace SSCreator
         static void Main(string[] args)
         {
             if (args.Length < 3) {
-                Console.WriteLine("Error: Need 2 arguments.");
+                Console.WriteLine("Error: Needs 3 arguments.");
                 return;
             } 
             TemplateBase.generate(args[0], args[1], args[2]);
