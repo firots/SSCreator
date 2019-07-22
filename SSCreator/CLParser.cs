@@ -5,28 +5,15 @@ namespace SSCreator
     {
         public static bool Parse(string[] args)
         {
-            if (args.Length == 0) {
-                Console.WriteLine("Error: Empty args.");
-                return false;
-            } else
-            {
-                foreach (TemplateBase t in TemplateManager.templates)
+            if (args.Length > 0) {
+                var template = Array.Find(TemplateManager.templates, t => t.name == args[0] && t.argCount == args.Length);
+                if (template != null)
                 {
-                    if (t.name == args[0]) {
-                        if (t.argCount == args.Length)
-                        {
-                            t.generate(args);
-                            return true;
-                        } else
-                        {
-                            Console.WriteLine("Error: " + t.name + " template requires " + t.argCount + "arguments.");
-                            return false;
-                        }
-                        
-                    }
-                }
+                    template.generate(args);
+                    return true;
+                } 
             }
-            Console.WriteLine("Error: " + "template with name " + args[0] " not found");
+            Console.WriteLine("Error: Cannot find a template to match given arguments.");
             return false;
         }
     }
