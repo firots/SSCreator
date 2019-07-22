@@ -5,7 +5,6 @@ using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.Primitives;
 using System.IO;
 using SixLabors.ImageSharp.Formats.Png;
-
 namespace SSCreator
 {
     class TemplateBase
