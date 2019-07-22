@@ -1,12 +1,13 @@
 ﻿using System;
 namespace SSCreator
 {
-    public class CLParser
+    public struct CLParser
     {
-        public static bool parse(string[] args)
+        public static bool Parse(string[] args)
         {
             if (args.Length == 0) {
                 Console.WriteLine("Error: Empty args.");
+                return false;
             } else
             {
                 foreach (TemplateBase t in TemplateManager.templates)
@@ -19,11 +20,13 @@ namespace SSCreator
                         } else
                         {
                             Console.WriteLine("Error: " + t.name + " template requires " + t.argCount + "arguments.");
+                            return false;
                         }
                         
                     }
                 }
             }
+            Console.WriteLine("Error: " + "template with name " + args[0] " not found");
             return false;
         }
     }

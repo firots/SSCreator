@@ -6,7 +6,7 @@ namespace SSCreator
     {
         static void Main(string[] args)
         {
-            CLParser.parse(args);
+            CLParser.Parse(args);
         }
     }
 }
