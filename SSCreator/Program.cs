@@ -6,11 +6,12 @@ namespace SSCreator
     {
         static void Main(string[] args)
         {
-            if (args.Length == 0) {
-                Console.WriteLine("Error: args is empty");
+            if (args.Length < 3) {
+                Console.WriteLine("Error: Need 2 arguments.");
                 return;
             } 
-            TemplateBase.generate("Test", args[0], "result.png");
+            TemplateBase.generate(args[0], args[1], args[2]);
+            Console.WriteLine("Image saved at" + args[2]);
         }
     }
 }
