@@ -10,7 +10,7 @@ namespace SSCreator {
             this.model = model;
         }
         
-        public virtual void generate() {
+        public void generate() {
             SKBitmap template = new SKBitmap(model.canvasSize[0], model.canvasSize[1]);
             using (SKCanvas canvas = new SKCanvas(template)) {
                 string framePath = getSSCreatorPath(model.deviceFramePath);
