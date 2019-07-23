@@ -6,7 +6,6 @@ namespace SSCreator {
             if (args.Length > 0) {
                 var template = Array.Find(TemplateManager.templates, t => t.name == args[0] && t.argCount == args.Length);
                 if (template != null) {
-                    //template.generate(args);
                     template.generate(args);
                     return true;
                 } 
