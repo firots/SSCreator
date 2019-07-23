@@ -33,7 +33,7 @@ namespace SSCreator {
             }
         }
 
-        public static SSModel Load(string json) {
+        public static SSModel load(string json) {
             try {
                 JObject o = JObject.Parse(json);
                 JsonSerializer serializer = new JsonSerializer();

@@ -5,7 +5,7 @@ namespace SSCreator {
             if (args.Length == 0) {
                 Console.WriteLine("FError: args is empty.");
             } else {
-                SSModel model = SSModel.Load(args[0]);
+                SSModel model = SSModel.load(args[0]);
                 if (model != null) {
                     ImageHelper IH = new ImageHelper(model);
                     IH.generate();
