@@ -7,6 +7,7 @@ namespace SSCreator {
         public SSBackgroundType type = SSBackgroundType.Adaptive;
         public int? color;
         public string imagePath;
+        public float? blur;
     }
 
     public enum SSBackgroundType {

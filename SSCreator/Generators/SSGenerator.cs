@@ -29,7 +29,11 @@ namespace SSCreator {
                 var info = new SKImageInfo(model.canvasSize.width, model.canvasSize.height);
                 bgBitmap = bgBitmap.Resize(info, SKFilterQuality.High);
             }
-            canvas.DrawBitmap(bgBitmap, new SKPoint(0, 0), null);
+            var filter = SKImageFilter.CreateBlur(model.background.blur ?? 20, model.background.blur ?? 20);
+            var paint = new SKPaint {
+                ImageFilter = filter
+            };
+            canvas.DrawBitmap(bgBitmap, new SKPoint(0, 0), paint);
         }
 
         private void drawScreen(SKCanvas canvas) {
