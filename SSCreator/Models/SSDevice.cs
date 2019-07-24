@@ -3,8 +3,8 @@ namespace SSCreator {
     public class SSDevice {
         public string framePath;
         public double frameScale;
-        public int[] position;
-        public int[] screenOffset;
-        public int[] screenSize;
+        public SSPosition position;
+        public SSPosition screenOffset;
+        public SSSize screenSize;
     }
 }

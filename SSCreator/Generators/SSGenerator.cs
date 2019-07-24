@@ -11,7 +11,7 @@ namespace SSCreator {
         }
         
         public void generate() {
-            SKBitmap template = new SKBitmap(model.canvasSize[0], model.canvasSize[1]);
+            SKBitmap template = new SKBitmap(model.canvasSize.width, model.canvasSize.height);
             using (SKCanvas canvas = new SKCanvas(template)) {
                 drawScreen(canvas);
                 drawFrame(canvas);
@@ -19,12 +19,28 @@ namespace SSCreator {
             }
         }
 
+        private void drawBackground(SKCanvas canvas) {
+
+        }
+
+        private void drawAdaptiveBackground(SKCanvas canvas, SKBitmap bitmap) {
+            SKBitmap bgBitmap = bitmap;
+            if (model.device.screenSize.width != model.canvasSize.width || model.device.screenSize.height != model.canvasSize.height) {
+                var info = new SKImageInfo(model.canvasSize.width, model.canvasSize.height);
+                bgBitmap = bgBitmap.Resize(info, SKFilterQuality.High);
+            }
+            canvas.DrawBitmap(bgBitmap, new SKPoint(0, 0), null);
+        }
+
         private void drawScreen(SKCanvas canvas) {
             var ssBuffer = File.ReadAllBytes(model.screenshotPath);
             SKBitmap ssBitmap = SKBitmap.Decode(ssBuffer);
+            if (model.background.type == SSBackgroundType.Adaptive) {
+                drawAdaptiveBackground(canvas, ssBitmap);
+            }
             ssBitmap = SkiaHelper.scaleBitmap(ssBitmap, model.device.frameScale);
-            var ssPosX = Convert.ToInt32(model.device.screenOffset[0] * model.device.frameScale) + model.device.position[0];
-            var ssPosY = Convert.ToInt32(model.device.screenOffset[1] * model.device.frameScale) + model.device.position[1];
+            var ssPosX = Convert.ToInt32(model.device.screenOffset.x * model.device.frameScale) + model.device.position.x;
+            var ssPosY = Convert.ToInt32(model.device.screenOffset.y * model.device.frameScale) + model.device.position.y;
             canvas.DrawBitmap(ssBitmap, new SKPoint(ssPosX, ssPosY), null);
         }
 
@@ -33,7 +49,7 @@ namespace SSCreator {
             var frameBuffer = File.ReadAllBytes(framePath);
             SKBitmap frameBitmap = SKBitmap.Decode(frameBuffer);
             frameBitmap = SkiaHelper.scaleBitmap(frameBitmap, model.device.frameScale);
-            canvas.DrawBitmap(frameBitmap, new SKPoint(model.device.position[0], model.device.position[1]), null);
+            canvas.DrawBitmap(frameBitmap, new SKPoint(model.device.position.x, model.device.position.y), null);
         }
 
         private string getSSCreatorPath(string path) {
