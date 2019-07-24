@@ -9,7 +9,7 @@ namespace SSCreator {
             stopwatch.Start();
             CLParser.parse(args);
             stopwatch.Stop();
-            Console.WriteLine(stopwatch.ElapsedMilliseconds);
+            Console.WriteLine("Whole process took " + (Convert.ToDecimal(stopwatch.ElapsedMilliseconds) / 1000) + " seconds.");
         }
     }
 }

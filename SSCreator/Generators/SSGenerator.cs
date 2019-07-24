@@ -16,6 +16,7 @@ namespace SSCreator {
                 drawScreen(canvas);
                 drawFrame(canvas);
                 SkiaHelper.saveBitmap(template, model.savePath);
+                Console.WriteLine("SS saved to " + model.savePath);
             }
         }
 

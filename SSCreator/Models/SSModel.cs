@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Diagnostics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+
 
 namespace SSCreator {
     public class SSModel {
@@ -22,9 +24,13 @@ namespace SSCreator {
 
         public static SSModel load(string json) {
             try {
+                var stopwatch = new Stopwatch();
+                stopwatch.Start();
                 JObject o = JObject.Parse(json);
                 JsonSerializer serializer = new JsonSerializer();
                 SSModel model = (SSModel)serializer.Deserialize(new JTokenReader(o), typeof(SSModel));
+                stopwatch.Stop();
+                Console.WriteLine("JSON Loading took " + (Convert.ToDecimal(stopwatch.ElapsedMilliseconds) / 1000) + " seconds.");
                 return model;
             } catch {
                 return null;
