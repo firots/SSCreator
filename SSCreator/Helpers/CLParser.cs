@@ -7,8 +7,8 @@ namespace SSCreator {
             } else {
                 SSModel model = SSModel.load(args[0]);
                 if (model != null) {
-                    ImageHelper IH = new ImageHelper(model);
-                    IH.generate();
+                    SSGenerator SSG = new SSGenerator(model);
+                    SSG.generate();
                 } else {
                     Console.WriteLine("Cannot parse JSON.");
                 }
