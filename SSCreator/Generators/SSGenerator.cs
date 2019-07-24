@@ -24,7 +24,8 @@ namespace SSCreator {
         }
 
         private void drawAdaptiveBackground(SKCanvas canvas, SKBitmap bitmap) {
-            if (model.device.screenSize.width != model.canvasSize.width || model.device.screenSize.height != model.canvasSize.height) {
+            if (bitmap.Width != model.canvasSize.width || bitmap.Height != model.canvasSize.height) {
+                Print.Warning("Adaptive background size is not compatible with screenshot size, resizing adaptive background...");
                 var info = new SKImageInfo(model.canvasSize.width, model.canvasSize.height);
                 bitmap = bitmap.Resize(info, SKFilterQuality.High);
             }
@@ -40,6 +41,11 @@ namespace SSCreator {
             SKBitmap ssBitmap = SKBitmap.Decode(ssBuffer);
             if (model.background.type == SSBackgroundType.Adaptive) {
                 drawAdaptiveBackground(canvas, ssBitmap);
+            }
+            if (model.device.screenSize.width != ssBitmap.Width || model.device.screenSize.height != ssBitmap.Height) {
+                Print.Warning("Screenshot size is wrong, resizing screenshot...");
+                var info = new SKImageInfo(model.device.screenSize.width, model.device.screenSize.height);
+                ssBitmap = ssBitmap.Resize(info, SKFilterQuality.High);
             }
             ssBitmap = SkiaHelper.scaleBitmap(ssBitmap, model.device.frameScale);
             var ssPosX = Convert.ToInt32(model.device.screenOffset.x * model.device.frameScale) + model.device.position.x;
