@@ -10,7 +10,7 @@ namespace SSCreator {
                     SSGenerator SSG = new SSGenerator(model);
                     SSG.generate();
                 } else {
-                    Console.WriteLine("Cannot parse JSON.");
+                    Console.WriteLine("FError: Cannot parse JSON.");
                 }
             }
         }
