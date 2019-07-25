@@ -13,8 +13,8 @@ namespace SSCreator {
         public void generate() {
             SKBitmap template = new SKBitmap(model.canvasSize.width, model.canvasSize.height);
             using (SKCanvas canvas = new SKCanvas(template)) {
-                drawScreen(canvas);
-                drawFrame(canvas);
+                drawScreens(canvas);
+                drawFrames(canvas);
                 SkiaHelper.saveBitmap(template, model.savePath);
                 Console.WriteLine("SS saved to " + model.savePath);
             }
@@ -37,29 +37,35 @@ namespace SSCreator {
             canvas.DrawBitmap(bitmap, new SKPoint(0, 0), paint);
         }
 
-        private void drawScreen(SKCanvas canvas) {
-            var ssBuffer = File.ReadAllBytes(model.screenshotPath);
-            SKBitmap ssBitmap = SKBitmap.Decode(ssBuffer);
-            if (model.background.type == SSBackgroundType.Adaptive) {
-                drawAdaptiveBackground(canvas, ssBitmap);
+        private void drawScreens(SKCanvas canvas) {
+            int index = 0;
+            foreach (SSDevice device in model.devices) {
+                var ssBuffer = File.ReadAllBytes(device.screenshotPath);
+                SKBitmap ssBitmap = SKBitmap.Decode(ssBuffer);
+                if (index == 0 && model.background.type == SSBackgroundType.Adaptive) {
+                    drawAdaptiveBackground(canvas, ssBitmap);
+                }
+                if (device.screenSize.width != ssBitmap.Width || device.screenSize.height != ssBitmap.Height) {
+                    Print.Warning("Screenshot size is wrong, resizing screenshot...");
+                    var info = new SKImageInfo(device.screenSize.width, device.screenSize.height);
+                    ssBitmap = ssBitmap.Resize(info, SKFilterQuality.High);
+                }
+                ssBitmap = SkiaHelper.scaleBitmap(ssBitmap, device.frameScale);
+                var ssPosX = Convert.ToInt32(device.screenOffset.x * device.frameScale) + device.position.x;
+                var ssPosY = Convert.ToInt32(device.screenOffset.y * device.frameScale) + device.position.y;
+                canvas.DrawBitmap(ssBitmap, new SKPoint(ssPosX, ssPosY), null);
+                index++;
             }
-            if (model.device.screenSize.width != ssBitmap.Width || model.device.screenSize.height != ssBitmap.Height) {
-                Print.Warning("Screenshot size is wrong, resizing screenshot...");
-                var info = new SKImageInfo(model.device.screenSize.width, model.device.screenSize.height);
-                ssBitmap = ssBitmap.Resize(info, SKFilterQuality.High);
-            }
-            ssBitmap = SkiaHelper.scaleBitmap(ssBitmap, model.device.frameScale);
-            var ssPosX = Convert.ToInt32(model.device.screenOffset.x * model.device.frameScale) + model.device.position.x;
-            var ssPosY = Convert.ToInt32(model.device.screenOffset.y * model.device.frameScale) + model.device.position.y;
-            canvas.DrawBitmap(ssBitmap, new SKPoint(ssPosX, ssPosY), null);
         }
 
-        private void drawFrame(SKCanvas canvas) {
-            string framePath = getSSCreatorPath(model.device.framePath);
-            var frameBuffer = File.ReadAllBytes(framePath);
-            SKBitmap frameBitmap = SKBitmap.Decode(frameBuffer);
-            frameBitmap = SkiaHelper.scaleBitmap(frameBitmap, model.device.frameScale);
-            canvas.DrawBitmap(frameBitmap, new SKPoint(model.device.position.x, model.device.position.y), null);
+        private void drawFrames(SKCanvas canvas) {
+            foreach (SSDevice device in model.devices) {
+                string framePath = getSSCreatorPath(device.framePath);
+                var frameBuffer = File.ReadAllBytes(framePath);
+                SKBitmap frameBitmap = SKBitmap.Decode(frameBuffer);
+                frameBitmap = SkiaHelper.scaleBitmap(frameBitmap, device.frameScale);
+                canvas.DrawBitmap(frameBitmap, new SKPoint(device.position.x, device.position.y), null);
+            }
         }
 
         private string getSSCreatorPath(string path) {

@@ -6,5 +6,6 @@ namespace SSCreator {
         public SSPosition position;
         public SSPosition screenOffset;
         public SSSize screenSize;
+        public string screenshotPath;
     }
 }

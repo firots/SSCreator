@@ -9,9 +9,8 @@ using Newtonsoft.Json.Linq;
 namespace SSCreator {
     public class SSModel {
         public SSSize canvasSize;
-        public SSDevice device;
+        public SSDevice[] devices;
         public SSBackground background;
-        public string screenshotPath;
         public string savePath;
 
         public void save(string path) {
