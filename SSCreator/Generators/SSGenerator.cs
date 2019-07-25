@@ -31,7 +31,6 @@ namespace SSCreator {
             }
         }
 
-
         private SKBitmap createDevice(SSDevice device, SKCanvas canvas, int deviceId) {
             SKBitmap screenShot = createScreen(device, canvas, deviceId);
             SKBitmap frame = createFrame(device);
@@ -76,7 +75,6 @@ namespace SSCreator {
             return ssBitmap;
         }
         
-
         private SKBitmap createFrame(SSDevice device) {
             string framePath = getSSCreatorPath(device.framePath);
             var frameBuffer = File.ReadAllBytes(framePath);
