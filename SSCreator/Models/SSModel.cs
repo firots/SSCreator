@@ -26,9 +26,7 @@ namespace SSCreator {
             try {
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
-                JObject o = JObject.Parse(json);
-                JsonSerializer serializer = new JsonSerializer();
-                SSModel model = (SSModel)serializer.Deserialize(new JTokenReader(o), typeof(SSModel));
+                SSModel model = JsonConvert.DeserializeObject<SSModel>(json);
                 stopwatch.Stop();
                 Console.WriteLine("JSON Loading took " + (Convert.ToDecimal(stopwatch.ElapsedMilliseconds) / 1000) + " seconds.");
                 return model;

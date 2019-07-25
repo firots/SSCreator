@@ -14,9 +14,8 @@ namespace SSCreator {
 
         public static void saveBitmap(SKBitmap bitmap, string path) {
             using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write)) {
-                SKData data = SKImage.FromBitmap(bitmap).Encode(SKEncodedImageFormat.Png, 100);
-                var bytes = data.ToArray();
-                fs.Write(bytes, 0, bytes.Length);
+                SKData data = SKImage.FromBitmap(bitmap).Encode(SKEncodedImageFormat.Jpeg, 100);
+                data.SaveTo(fs);
             }
         }
 

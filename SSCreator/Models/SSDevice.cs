@@ -1,6 +1,6 @@
 ﻿using System;
 namespace SSCreator {
-    public class SSDevice {
+    public struct SSDevice {
         public string framePath;
         public double frameScale;
         public SSPosition position;

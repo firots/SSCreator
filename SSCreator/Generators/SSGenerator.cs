@@ -65,8 +65,7 @@ namespace SSCreator {
         }
 
         private SKBitmap createScreen(SSDevice device, SKCanvas canvas, int deviceId) {
-            var ssBuffer = File.ReadAllBytes(device.screenshotPath);
-            SKBitmap ssBitmap = SKBitmap.Decode(ssBuffer);
+            SKBitmap ssBitmap = SKBitmap.Decode(device.screenshotPath);
             if (deviceId == 0 && model.background.type == SSBackgroundType.Adaptive) {
                 drawAdaptiveBackground(canvas, ssBitmap);
             }
@@ -81,8 +80,7 @@ namespace SSCreator {
         
         private SKBitmap createFrame(SSDevice device) {
             string framePath = getSSCreatorPath(device.framePath);
-            var frameBuffer = File.ReadAllBytes(framePath);
-            SKBitmap frameBitmap = SKBitmap.Decode(frameBuffer);
+            SKBitmap frameBitmap = SKBitmap.Decode(framePath);
             frameBitmap = SkiaHelper.scaleBitmap(frameBitmap, device.frameScale);
             return frameBitmap;
         }
