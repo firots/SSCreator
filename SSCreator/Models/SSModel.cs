@@ -11,6 +11,7 @@ namespace SSCreator {
         public SSSize canvasSize;
         public SSDevice[] devices;
         public SSBackground background;
+        public bool? rightPart;
         public string savePath;
 
         public void save(string path) {

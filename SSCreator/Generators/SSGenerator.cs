@@ -27,7 +27,11 @@ namespace SSCreator {
             int deviceId = 0;
             foreach (SSDevice device in model.devices) {
                 SKBitmap deviceBitmap = createDevice(device, canvas, deviceId);
-                canvas.DrawBitmap(deviceBitmap, new SKPoint(device.position.x, device.position.y));
+                var x = device.position.x;
+                if (model.rightPart == true) {
+                    x = -(model.canvasSize.width - device.position.x);
+                }
+                canvas.DrawBitmap(deviceBitmap, new SKPoint(x, device.position.y));
             }
         }
 
