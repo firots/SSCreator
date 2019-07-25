@@ -5,6 +5,7 @@ namespace SSCreator {
         public double frameScale;
         public SSPosition position;
         public SSPosition screenOffset;
+        public double? rotation;
         public SSSize screenSize;
         public string screenshotPath;
     }

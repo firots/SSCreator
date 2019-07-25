@@ -53,6 +53,9 @@ namespace SSCreator {
                 ssBitmap = SkiaHelper.scaleBitmap(ssBitmap, device.frameScale);
                 var ssPosX = Convert.ToInt32(device.screenOffset.x * device.frameScale) + device.position.x;
                 var ssPosY = Convert.ToInt32(device.screenOffset.y * device.frameScale) + device.position.y;
+                if (device.rotation.HasValue && device.rotation > 0) {
+                    ssBitmap = SkiaHelper.rotateBitmap(ssBitmap, device.rotation ?? 0);
+                }
                 canvas.DrawBitmap(ssBitmap, new SKPoint(ssPosX, ssPosY), null);
                 index++;
             }
@@ -64,6 +67,9 @@ namespace SSCreator {
                 var frameBuffer = File.ReadAllBytes(framePath);
                 SKBitmap frameBitmap = SKBitmap.Decode(frameBuffer);
                 frameBitmap = SkiaHelper.scaleBitmap(frameBitmap, device.frameScale);
+                if (device.rotation.HasValue && device.rotation > 0) {
+                    frameBitmap = SkiaHelper.rotateBitmap(frameBitmap, device.rotation ?? 0);
+                }
                 canvas.DrawBitmap(frameBitmap, new SKPoint(device.position.x, device.position.y), null);
             }
         }

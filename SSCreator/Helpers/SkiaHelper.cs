@@ -19,5 +19,25 @@ namespace SSCreator {
                 fs.Write(bytes, 0, bytes.Length);
             }
         }
+
+        public static SKBitmap rotateBitmap(SKBitmap bitmap, double angle) {
+            double radians = Math.PI * angle / 180;
+            float sine = (float)Math.Abs(Math.Sin(radians));
+            float cosine = (float)Math.Abs(Math.Cos(radians));
+            int originalWidth = bitmap.Width;
+            int originalHeight = bitmap.Height;
+            int rotatedWidth = (int)(cosine * originalWidth + sine * originalHeight);
+            int rotatedHeight = (int)(cosine * originalHeight + sine * originalWidth);
+
+            var rotatedBitmap = new SKBitmap(rotatedWidth, rotatedHeight);
+
+            using (SKCanvas canvas = new SKCanvas(rotatedBitmap)) {
+                canvas.Translate(rotatedWidth / 2, rotatedHeight / 2);
+                canvas.RotateDegrees((float)angle);
+                canvas.Translate(-originalWidth / 2, -originalHeight / 2);
+                canvas.DrawBitmap(bitmap, new SKPoint());
+            }
+            return rotatedBitmap;
+        }
     }
 }
