@@ -33,19 +33,19 @@ namespace SSCreator {
 
 
         private SKBitmap createDevice(SSDevice device, SKCanvas canvas, int deviceId) {
-            SKBitmap frame = createFrame(device);
             SKBitmap screenShot = createScreen(device, canvas, deviceId);
-            SKBitmap foundation = new SKBitmap(frame.Width, frame.Height);
+            SKBitmap frame = createFrame(device);
             var ssPosX = Convert.ToInt32(device.screenOffset.x * device.frameScale);
             var ssPosY = Convert.ToInt32(device.screenOffset.y * device.frameScale);
-            using (SKCanvas tempCanvas = new SKCanvas(foundation)) {
-                tempCanvas.DrawBitmap(screenShot, new SKPoint(ssPosX, ssPosY));
-                tempCanvas.DrawBitmap(frame, new SKPoint(0, 0));
-            }
+            Tuple<SKBitmap, SKPoint>[] bitMapsToCombine = {
+                Tuple.Create(frame, new SKPoint(0, 0)),
+                Tuple.Create(screenShot, new SKPoint(ssPosX, ssPosY))
+            };
+            SKBitmap deviceBitmap = SkiaHelper.overlayBitmaps(bitMapsToCombine);
             if (device.rotation.HasValue) {
-                foundation = SkiaHelper.rotateBitmap(foundation, device.rotation ?? 0);
+                deviceBitmap = SkiaHelper.rotateBitmap(deviceBitmap, device.rotation ?? 0);
             }
-            return foundation;
+            return deviceBitmap;
         }
 
         private void drawAdaptiveBackground(SKCanvas canvas, SKBitmap bitmap) {
