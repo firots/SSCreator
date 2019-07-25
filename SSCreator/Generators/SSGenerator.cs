@@ -13,8 +13,7 @@ namespace SSCreator {
         public void generate() {
             SKBitmap template = new SKBitmap(model.canvasSize.width, model.canvasSize.height);
             using (SKCanvas canvas = new SKCanvas(template)) {
-                drawScreens(canvas);
-                drawFrames(canvas);
+                drawDevices(canvas);
                 SkiaHelper.saveBitmap(template, model.savePath);
                 Console.WriteLine("SS saved to " + model.savePath);
             }
@@ -22,6 +21,31 @@ namespace SSCreator {
 
         private void drawBackground(SKCanvas canvas) {
 
+        }
+
+        private void drawDevices(SKCanvas canvas) {
+            int deviceId = 0;
+            foreach (SSDevice device in model.devices) {
+                SKBitmap deviceBitmap = createDevice(device, canvas, deviceId);
+                canvas.DrawBitmap(deviceBitmap, new SKPoint(device.position.x, device.position.y));
+            }
+        }
+
+
+        private SKBitmap createDevice(SSDevice device, SKCanvas canvas, int deviceId) {
+            SKBitmap frame = createFrame(device);
+            SKBitmap screenShot = createScreen(device, canvas, deviceId);
+            SKBitmap foundation = new SKBitmap(frame.Width, frame.Height);
+            var ssPosX = Convert.ToInt32(device.screenOffset.x * device.frameScale);
+            var ssPosY = Convert.ToInt32(device.screenOffset.y * device.frameScale);
+            using (SKCanvas tempCanvas = new SKCanvas(foundation)) {
+                tempCanvas.DrawBitmap(screenShot, new SKPoint(ssPosX, ssPosY));
+                tempCanvas.DrawBitmap(frame, new SKPoint(0, 0));
+            }
+            if (device.rotation.HasValue) {
+                foundation = SkiaHelper.rotateBitmap(foundation, device.rotation ?? 0);
+            }
+            return foundation;
         }
 
         private void drawAdaptiveBackground(SKCanvas canvas, SKBitmap bitmap) {
@@ -37,41 +61,28 @@ namespace SSCreator {
             canvas.DrawBitmap(bitmap, new SKPoint(0, 0), paint);
         }
 
-        private void drawScreens(SKCanvas canvas) {
-            int index = 0;
-            foreach (SSDevice device in model.devices) {
-                var ssBuffer = File.ReadAllBytes(device.screenshotPath);
-                SKBitmap ssBitmap = SKBitmap.Decode(ssBuffer);
-                if (index == 0 && model.background.type == SSBackgroundType.Adaptive) {
-                    drawAdaptiveBackground(canvas, ssBitmap);
-                }
-                if (device.screenSize.width != ssBitmap.Width || device.screenSize.height != ssBitmap.Height) {
-                    Print.Warning("Screenshot size is wrong, resizing screenshot...");
-                    var info = new SKImageInfo(device.screenSize.width, device.screenSize.height);
-                    ssBitmap = ssBitmap.Resize(info, SKFilterQuality.High);
-                }
-                ssBitmap = SkiaHelper.scaleBitmap(ssBitmap, device.frameScale);
-                var ssPosX = Convert.ToInt32(device.screenOffset.x * device.frameScale) + device.position.x;
-                var ssPosY = Convert.ToInt32(device.screenOffset.y * device.frameScale) + device.position.y;
-                if (device.rotation.HasValue && device.rotation > 0) {
-                    ssBitmap = SkiaHelper.rotateBitmap(ssBitmap, device.rotation ?? 0);
-                }
-                canvas.DrawBitmap(ssBitmap, new SKPoint(ssPosX, ssPosY), null);
-                index++;
+        private SKBitmap createScreen(SSDevice device, SKCanvas canvas, int deviceId) {
+            var ssBuffer = File.ReadAllBytes(device.screenshotPath);
+            SKBitmap ssBitmap = SKBitmap.Decode(ssBuffer);
+            if (deviceId == 0 && model.background.type == SSBackgroundType.Adaptive) {
+                drawAdaptiveBackground(canvas, ssBitmap);
             }
+            if (device.screenSize.width != ssBitmap.Width || device.screenSize.height != ssBitmap.Height) {
+                Print.Warning("Screenshot size is wrong, resizing screenshot...");
+                var info = new SKImageInfo(device.screenSize.width, device.screenSize.height);
+                ssBitmap = ssBitmap.Resize(info, SKFilterQuality.High);
+            }
+            ssBitmap = SkiaHelper.scaleBitmap(ssBitmap, device.frameScale);
+            return ssBitmap;
         }
+        
 
-        private void drawFrames(SKCanvas canvas) {
-            foreach (SSDevice device in model.devices) {
-                string framePath = getSSCreatorPath(device.framePath);
-                var frameBuffer = File.ReadAllBytes(framePath);
-                SKBitmap frameBitmap = SKBitmap.Decode(frameBuffer);
-                frameBitmap = SkiaHelper.scaleBitmap(frameBitmap, device.frameScale);
-                if (device.rotation.HasValue && device.rotation > 0) {
-                    frameBitmap = SkiaHelper.rotateBitmap(frameBitmap, device.rotation ?? 0);
-                }
-                canvas.DrawBitmap(frameBitmap, new SKPoint(device.position.x, device.position.y), null);
-            }
+        private SKBitmap createFrame(SSDevice device) {
+            string framePath = getSSCreatorPath(device.framePath);
+            var frameBuffer = File.ReadAllBytes(framePath);
+            SKBitmap frameBitmap = SKBitmap.Decode(frameBuffer);
+            frameBitmap = SkiaHelper.scaleBitmap(frameBitmap, device.frameScale);
+            return frameBitmap;
         }
 
         private string getSSCreatorPath(string path) {
