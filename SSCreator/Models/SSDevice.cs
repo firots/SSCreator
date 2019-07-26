@@ -9,6 +9,7 @@ namespace SSCreator {
         public double? rotation;
         public SSSize screenSize;
         public string screenshotPath;
+        public bool? rightPart;
 
         public void setOffset() {
             switch (name) {

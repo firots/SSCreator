@@ -65,10 +65,11 @@ namespace SSCreator {
             foreach (SSDevice device in model.devices) {
                 SKBitmap deviceBitmap = createDevice(device, canvas, deviceId);
                 var x = device.position.x;
-                if (model.rightPart == true) {
+                if (device.rightPart == true) {
                     x = -(model.canvasSize.width - device.position.x);
                 }
                 canvas.DrawBitmap(deviceBitmap, new SKPoint(x, device.position.y));
+                deviceId++;
             }
         }
 
