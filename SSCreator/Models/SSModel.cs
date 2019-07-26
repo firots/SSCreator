@@ -5,7 +5,6 @@ using System.Diagnostics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-
 namespace SSCreator {
     public class SSModel {
         public SSSize canvasSize;
@@ -26,7 +25,7 @@ namespace SSCreator {
             try {
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
-                SSModel model = JsonConvert.DeserializeObject<SSModel>(json);
+                var model = JsonConvert.DeserializeObject<SSModel>(json);
                 stopwatch.Stop();
                 Console.WriteLine("JSON Loading took " + (Convert.ToDecimal(stopwatch.ElapsedMilliseconds) / 1000) + " seconds.");
                 return model;
