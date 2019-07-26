@@ -13,6 +13,7 @@ namespace SSCreator {
         public void generate() {
             SKBitmap template = new SKBitmap(model.canvasSize.width, model.canvasSize.height);
             using (SKCanvas canvas = new SKCanvas(template)) {
+                drawBackground(canvas);
                 drawDevices(canvas);
                 SkiaHelper.saveBitmap(template, model.savePath);
                 Console.WriteLine("SS saved to " + model.savePath);
@@ -20,7 +21,34 @@ namespace SSCreator {
         }
 
         private void drawBackground(SKCanvas canvas) {
+            if (model.background.type == SSBackgroundType.Solid) {
+                drawSolidBackground(canvas);
+            } else if (model.background.type == SSBackgroundType.Image) {
+                drawImageBackground(canvas);
+            }
+        }
 
+        private void drawImageBackground(SKCanvas canvas) {
+            SKBitmap bgBitmap = SKBitmap.Decode(model.background.imagePath);
+            if (bgBitmap.Width != model.canvasSize.width || bgBitmap.Height != model.canvasSize.height) {
+                var info = new SKImageInfo(model.canvasSize.width, model.canvasSize.height);
+                bgBitmap = bgBitmap.Resize(info, SKFilterQuality.High);
+            }
+            if (model.background.blur.HasValue && model.background.blur != 0) {
+                var filter = SKImageFilter.CreateBlur((int)model.background.blur, (int)model.background.blur);
+                var paint = new SKPaint {
+                    ImageFilter = filter
+                };
+                canvas.DrawBitmap(bgBitmap, new SKPoint(0, 0), paint);
+            } else {
+                canvas.DrawBitmap(bgBitmap, new SKPoint(0, 0));
+            }
+        }
+
+        private void drawSolidBackground(SKCanvas canvas) {
+            SKColor color;
+            SKColor.TryParse(model.background.color.ToString(), out color);
+            canvas.Clear(color);
         }
 
         private void drawDevices(SKCanvas canvas) {

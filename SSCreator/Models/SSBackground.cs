@@ -5,7 +5,7 @@ namespace SSCreator {
     public struct SSBackground {
         [JsonConverter(typeof(StringEnumConverter))]
         public SSBackgroundType type;
-        public int? color;
+        public string color;
         public string imagePath;
         public float? blur;
     }
