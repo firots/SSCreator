@@ -8,6 +8,15 @@ namespace SSCreator {
 
         public SSGenerator(SSModel model) {
             this.model = model;
+            setDeviceOffsets();
+        }
+
+        private void setDeviceOffsets() {
+            foreach (SSDevice device in model.devices) {
+                if (device.screenOffset == null) {
+                    device.setOffset();
+                }
+            }
         }
         
         public void generate() {
@@ -66,8 +75,8 @@ namespace SSCreator {
         private SKBitmap createDevice(SSDevice device, SKCanvas canvas, int deviceId) {
             SKBitmap screenShot = createScreen(device, canvas, deviceId);
             SKBitmap frame = createFrame(device);
-            var ssPosX = Convert.ToInt32(device.screenOffset.x * device.frameScale);
-            var ssPosY = Convert.ToInt32(device.screenOffset.y * device.frameScale);
+            var ssPosX = Convert.ToInt32(device.screenOffset?.x * device.frameScale);
+            var ssPosY = Convert.ToInt32(device.screenOffset?.y * device.frameScale);
             Tuple<SKBitmap, SKPoint>[] bitMapsToCombine = {
                 Tuple.Create(frame, new SKPoint(0, 0)),
                 Tuple.Create(screenShot, new SKPoint(ssPosX, ssPosY))

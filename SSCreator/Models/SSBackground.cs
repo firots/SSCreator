@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 namespace SSCreator {
-    public struct SSBackground {
+    public class SSBackground {
         [JsonConverter(typeof(StringEnumConverter))]
         public SSBackgroundType type;
         public string color;
