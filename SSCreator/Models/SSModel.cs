@@ -7,7 +7,8 @@ using Newtonsoft.Json.Linq;
 
 namespace SSCreator {
     public class SSModel {
-        public SSSize canvasSize;
+        public SSSize canvasSize = new SSSize(0, 0);
+        public DeviceModel? canvasModel;
         public SSDevice[] devices;
         public SSBackground background;
         public string savePath;
@@ -33,10 +34,32 @@ namespace SSCreator {
             }
         }
 
-        public void setDeviceOffsets() {
+        public void setAutoValues() {
+            setDeviceOffsets();
+            setCanvasSize();
+        }
+
+        private void setDeviceOffsets() {
             foreach (SSDevice device in devices) {
                 if (device.screenOffset == null) {
                     device.setOffset();
+                }
+            }
+        }
+
+        private void setCanvasSize() {
+            if (canvasSize.width == 0 && canvasSize.height == 0) {
+                if (canvasModel.HasValue) {
+                    switch (canvasModel) {
+                        case DeviceModel.iPhoneXsMax:
+                            canvasSize = new SSSize(1242, 2688);
+                            break;
+                        case DeviceModel.iPhone8Plus:
+                            canvasSize = new SSSize(1242, 2208);
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }

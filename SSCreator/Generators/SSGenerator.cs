@@ -7,7 +7,7 @@ namespace SSCreator {
 
         public SSGenerator(SSModel model) {
             this.model = model;
-            model.setDeviceOffsets();
+            model.setAutoValues();
         }
 
         public void generate() {
