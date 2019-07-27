@@ -34,18 +34,18 @@ namespace SSCreator {
             if (alignX != null) {
                 if (alignX.style == AlignKeys.center) {
                     calculatedPos.x = (canvasWidth - deviceWidth) / 2;
-                } else if (alignX.style == AlignKeys.leftSpace) {
+                } else if (alignX.style == AlignKeys.left) {
                     calculatedPos.x = alignX.value;
-                } else if (alignX.style == AlignKeys.rightSpace) {
+                } else if (alignX.style == AlignKeys.right) {
                     calculatedPos.x = canvasWidth - deviceWidth - alignX.value;
                 }
             }
             if (alignY != null) {
                 if (alignY.style == AlignKeys.center) {
                     calculatedPos.y = (canvasHeight - deviceHeight) / 2;
-                } else if (alignY.style == AlignKeys.topSpace) {
+                } else if (alignY.style == AlignKeys.top) {
                     calculatedPos.y = alignY.value;
-                } else if (alignY.style == AlignKeys.bottomSpace) {
+                } else if (alignY.style == AlignKeys.bottom) {
                     calculatedPos.y = canvasHeight - deviceHeight - alignY.value;
                 }
             }
@@ -54,10 +54,10 @@ namespace SSCreator {
     }
 
     public enum AlignKeys {
-        leftSpace,
-        rightSpace,
-        topSpace,
-        bottomSpace,
+        left,
+        right,
+        top,
+        bottom,
         center
     }
 
