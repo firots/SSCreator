@@ -95,12 +95,13 @@ namespace SSCreator {
 
         private SKBitmap createScreen(SSDevice device, SKCanvas canvas, int deviceId) {
             SKBitmap ssBitmap = SKBitmap.Decode(device.screenshotPath);
+            var screenSize = (SSSize)device.screenSize;
             if (deviceId == 0 && model.background.type == SSBackgroundType.adaptive) {
                 drawAdaptiveBackground(canvas, ssBitmap);
             }
-            if (device.screenSize.width != ssBitmap.Width || device.screenSize.height != ssBitmap.Height) {
+            if (screenSize.width != ssBitmap.Width || screenSize.height != ssBitmap.Height) {
                 Print.Warning("Screenshot size is wrong, resizing screenshot...");
-                var info = new SKImageInfo(device.screenSize.width, device.screenSize.height);
+                var info = new SKImageInfo(screenSize.width, screenSize.height);
                 ssBitmap = ssBitmap.Resize(info, SKFilterQuality.High);
             }
             ssBitmap = SkiaHelper.scaleBitmap(ssBitmap, device.frameScale);

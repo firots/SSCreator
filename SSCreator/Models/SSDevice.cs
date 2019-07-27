@@ -12,20 +12,20 @@ namespace SSCreator {
         public AlignDevice alignY;
         public SSPosition? screenOffset;
         public double? rotation;
-        public SSSize screenSize;
+        public SSSize? screenSize;
         public string screenshotPath;
         public bool? rightPart;
 
         public void setOffset() {
-            switch (model) {
-                case DeviceModel.iPhoneXsMax:
-                    screenOffset = new SSPosition(140, 140);
-                    break;
-                case DeviceModel.iPhone8Plus:
-                    screenOffset = new SSPosition(200, 400);
-                    break;
-                default:
-                    break;
+            foreach (Device dev in Devices.all) {
+                if (dev.name == model) {
+                    if (screenOffset == null) {
+                        screenOffset = dev.screenOffset;
+                    }
+                    if (screenSize == null) {
+                        screenSize = dev.screenSize;
+                    }
+                }
             }
         }
         

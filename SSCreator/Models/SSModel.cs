@@ -41,29 +41,21 @@ namespace SSCreator {
 
         private void setDeviceOffsets() {
             foreach (SSDevice device in devices) {
-                if (device.screenOffset == null) {
-                    device.setOffset();
-                }
+                device.setOffset();
             }
         }
 
         private void setCanvasSize() {
             if (canvasSize.width == 0 && canvasSize.height == 0) {
                 if (canvasModel.HasValue) {
-                    switch (canvasModel) {
-                        case DeviceModel.iPhoneXsMax:
-                            canvasSize = new SSSize(1242, 2688);
-                            break;
-                        case DeviceModel.iPhone8Plus:
-                            canvasSize = new SSSize(1242, 2208);
-                            break;
-                        default:
-                            Print.Warning("Unknown canvasModel, canvas size will be zero.");
-                            break;
+                    foreach (Device dev in Devices.all) {
+                        if (dev.name == canvasModel) {
+                            canvasSize = dev.screenSize;
+                            return;
+                        }
                     }
-                } else {
-                    Print.Warning("Canvas size and canvasModels are empty, canvas size will be zero.");
-                }
+                } 
+                Print.Warning("Canvas size and canvasModels are empty, canvas size will be zero.");
             }
         }
     }
