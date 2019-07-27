@@ -11,8 +11,8 @@ namespace SSCreator {
     }
 
     public enum SSBackgroundType {
-        Adaptive,
-        Solid,
-        Image
+        adaptive,
+        solid,
+        image
     }
 }

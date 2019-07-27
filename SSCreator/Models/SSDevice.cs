@@ -1,7 +1,10 @@
 ﻿using System;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 namespace SSCreator {
     public class SSDevice {
-        public string name;
+        [JsonConverter(typeof(StringEnumConverter))]
+        public DeviceModel model;
         public string framePath;
         public double frameScale;
         public SSPosition position;
@@ -12,16 +15,21 @@ namespace SSCreator {
         public bool? rightPart;
 
         public void setOffset() {
-            switch (name) {
-                case "Apple iPhone Xs Max":
+            switch (model) {
+                case DeviceModel.iPhoneXsMax:
                     screenOffset = new SSPosition(140, 140);
                     break;
-                case "Apple iPhone 8 Plus":
+                case DeviceModel.iPhone8Plus:
                     screenOffset = new SSPosition(200, 400);
                     break;
                 default:
                     break;
             }
         }
+    }
+
+    public enum DeviceModel {
+        iPhoneXsMax,
+        iPhone8Plus
     }
 }

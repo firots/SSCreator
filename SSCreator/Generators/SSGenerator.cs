@@ -30,9 +30,9 @@ namespace SSCreator {
         }
 
         private void drawBackground(SKCanvas canvas) {
-            if (model.background.type == SSBackgroundType.Solid) {
+            if (model.background.type == SSBackgroundType.solid) {
                 drawSolidBackground(canvas);
-            } else if (model.background.type == SSBackgroundType.Image) {
+            } else if (model.background.type == SSBackgroundType.image) {
                 drawImageBackground(canvas);
             }
         }
@@ -104,7 +104,7 @@ namespace SSCreator {
 
         private SKBitmap createScreen(SSDevice device, SKCanvas canvas, int deviceId) {
             SKBitmap ssBitmap = SKBitmap.Decode(device.screenshotPath);
-            if (deviceId == 0 && model.background.type == SSBackgroundType.Adaptive) {
+            if (deviceId == 0 && model.background.type == SSBackgroundType.adaptive) {
                 drawAdaptiveBackground(canvas, ssBitmap);
             }
             if (device.screenSize.width != ssBitmap.Width || device.screenSize.height != ssBitmap.Height) {
