@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using SkiaSharp;
 
 namespace SSCreator {
@@ -8,17 +7,9 @@ namespace SSCreator {
 
         public SSGenerator(SSModel model) {
             this.model = model;
-            setDeviceOffsets();
+            model.setDeviceOffsets();
         }
 
-        private void setDeviceOffsets() {
-            foreach (SSDevice device in model.devices) {
-                if (device.screenOffset == null) {
-                    device.setOffset();
-                }
-            }
-        }
-        
         public void generate() {
             SKBitmap template = new SKBitmap(model.canvasSize.width, model.canvasSize.height);
             using (SKCanvas canvas = new SKCanvas(template)) {
@@ -126,7 +117,7 @@ namespace SSCreator {
         private string getSSCreatorPath(string path) {
             string ssCreator = "SSCreator";
             string home = System.Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            return Path.Combine(home, ssCreator, path);
+            return System.IO.Path.Combine(home, ssCreator, path);
         }
     }
 }

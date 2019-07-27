@@ -32,5 +32,13 @@ namespace SSCreator {
                 return null;
             }
         }
+
+        public void setDeviceOffsets() {
+            foreach (SSDevice device in devices) {
+                if (device.screenOffset == null) {
+                    device.setOffset();
+                }
+            }
+        }
     }
 }
