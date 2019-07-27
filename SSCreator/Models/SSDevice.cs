@@ -66,9 +66,4 @@ namespace SSCreator {
         public AlignKeys style = AlignKeys.center;
         public int value = 0;
     }
-
-    public enum DeviceModel {
-        iPhoneXsMax,
-        iPhone8Plus
-    }
 }

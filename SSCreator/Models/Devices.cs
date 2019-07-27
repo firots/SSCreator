@@ -7,6 +7,11 @@ namespace SSCreator {
         };
     }
 
+    public enum DeviceModel {
+        iPhoneXsMax,
+        iPhone8Plus
+    }
+
     public class Device {
         public DeviceModel name;
         public SSSize screenSize;
