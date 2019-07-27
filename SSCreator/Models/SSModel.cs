@@ -58,8 +58,11 @@ namespace SSCreator {
                             canvasSize = new SSSize(1242, 2208);
                             break;
                         default:
+                            Print.Warning("Unknown canvasModel, canvas size will be zero.");
                             break;
                     }
+                } else {
+                    Print.Warning("Canvas size and canvasModels are empty, canvas size will be zero.");
                 }
             }
         }
