@@ -14,7 +14,7 @@ namespace SSCreator {
             SKBitmap template = new SKBitmap(model.canvasSize.width, model.canvasSize.height);
             using (SKCanvas canvas = new SKCanvas(template)) {
                 drawBackground(canvas);
-                drawDevices(canvas);
+                drawLayers(canvas);
                 SkiaHelper.saveBitmap(template, model.savePath);
                 Console.WriteLine("SS saved to " + model.savePath);
             }
@@ -51,9 +51,15 @@ namespace SSCreator {
             canvas.Clear(color);
         }
 
-        private void drawDevices(SKCanvas canvas) {
+        private void drawLayers(SKCanvas canvas) {
+            foreach(SSLayer layer in model.layers) {
+                drawDevices(canvas, layer);
+            }
+        }
+
+        private void drawDevices(SKCanvas canvas, SSLayer layer) {
             int deviceId = 0;
-            foreach (SSDevice device in model.devices) {
+            foreach (SSDevice device in layer.devices) {
                 SKBitmap deviceBitmap = createDevice(device, canvas, deviceId);
                 var position = device.getPosition(deviceBitmap.Width, deviceBitmap.Height, model.canvasSize.width, model.canvasSize.height);
                 if (device.rightPart == true) {

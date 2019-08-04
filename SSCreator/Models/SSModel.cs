@@ -4,14 +4,16 @@ using System.Text;
 using System.Diagnostics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SSCreator {
     public class SSModel {
         public SSSize canvasSize = new SSSize(0, 0);
         public DeviceModel? canvasModel;
-        public SSDevice[] devices;
         public SSBackground background;
         public string savePath;
+        public List<SSLayer> layers = new List<SSLayer>();
 
         public void save(string path) {
             string json = JsonConvert.SerializeObject(this, Formatting.Indented);
@@ -28,6 +30,7 @@ namespace SSCreator {
                 var model = JsonConvert.DeserializeObject<SSModel>(json);
                 stopwatch.Stop();
                 Console.WriteLine("JSON Loading took " + (Convert.ToDecimal(stopwatch.ElapsedMilliseconds) / 1000) + " seconds.");
+                model.layers.Sort();
                 return model;
             } catch {
                 return null;
@@ -39,9 +42,10 @@ namespace SSCreator {
             setCanvasSize();
         }
 
-        private void setDeviceOffsets() {
-            foreach (SSDevice device in devices) {
-                device.setOffset();
+
+        public void setDeviceOffsets() {
+            foreach (SSLayer layer in layers) {
+                layer.setDeviceOffsets();
             }
         }
 
