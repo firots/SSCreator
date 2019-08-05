@@ -14,9 +14,9 @@ namespace SSCreator {
             using (SKCanvas canvas = new SKCanvas(SS)) {
                 drawBackground(canvas);
                 drawLayers(canvas);
-                SkiaHelper.saveBitmap(SS, model.savePath);
-                Console.WriteLine("SS saved to " + model.savePath);
             }
+            SkiaHelper.saveBitmap(SS, model.savePath);
+            Console.WriteLine("SS saved to " + model.savePath);
         }
 
         private void drawBackground(SKCanvas canvas) {
