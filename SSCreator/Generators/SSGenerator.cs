@@ -12,12 +12,16 @@ namespace SSCreator {
         public void generate() {
             SKBitmap SS = new SKBitmap(model.canvasSize.width, model.canvasSize.height);
             using (SKCanvas canvas = new SKCanvas(SS)) {
-                SSBackgroundGenerator bgGenerator = new SSBackgroundGenerator(model.background, model.canvasSize);
-                bgGenerator.drawBackground(canvas);
+                drawBackground(canvas);
                 drawLayers(canvas);
                 SkiaHelper.saveBitmap(SS, model.savePath);
                 Console.WriteLine("SS saved to " + model.savePath);
             }
+        }
+
+        private void drawBackground(SKCanvas canvas) {
+            SSBackgroundGenerator bgGenerator = new SSBackgroundGenerator(model.background, model.canvasSize);
+            bgGenerator.drawBackground(canvas);
         }
 
         private void drawLayers(SKCanvas canvas) {
