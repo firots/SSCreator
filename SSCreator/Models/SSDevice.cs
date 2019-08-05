@@ -15,6 +15,7 @@ namespace SSCreator {
         public SSSize? screenSize;
         public string screenshotPath;
         public bool? rightPart;
+        public bool? adaptiveBackground;
 
         public void setOffset() {
             foreach (Device dev in Devices.all) {
