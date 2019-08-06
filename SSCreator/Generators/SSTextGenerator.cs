@@ -28,12 +28,10 @@ namespace SSCreator {
                 var position = PositionHelper.getPosition(text.alignX, text.alignY, width, height, canvasSize);
                 position.y += text.fontSize;
                 if (text.rotation.HasValue && text.rotation > 0) {
-                    using (SKPath path = new SKPath()) {
-                        path.MoveTo(width / 10, height - height / 10);
-                        path.LineTo(width - width / 10, height / 10);
-                        canvas.DrawTextOnPath(text.text, path, 0, 0, paint);
-                    }
- 
+                    canvas.Save();
+                    canvas.RotateDegrees((float)text.rotation);
+                    canvas.DrawText(text.text, position.x, position.y, paint);
+                    canvas.Restore();
                 } else {
                     canvas.DrawText(text.text, position.x, position.y, paint);
                 }
