@@ -23,7 +23,8 @@ namespace SSCreator {
                 paint.Typeface = getFont(text.fontName);
                 SKColor.TryParse(text.color, out SKColor color);
                 paint.Color = color;
-                var position = text.getPosition((int)paint.MeasureText(text.text), (int)text.fontSize, canvasSize.width, canvasSize.height);
+                var position = PositionHelper.getPosition(text.alignX, text.alignY, paint.MeasureText(text.text), text.fontSize, canvasSize);
+                position.y += text.fontSize;
                 canvas.DrawText(text.text, position.x, position.y, paint);
             }
         }

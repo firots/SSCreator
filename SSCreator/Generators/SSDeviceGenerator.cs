@@ -14,7 +14,7 @@ namespace SSCreator {
             int deviceId = 0;
             foreach (SSDevice device in devices) {
                 SKBitmap deviceBitmap = createDevice(device, canvas, deviceId);
-                var position = device.getPosition(deviceBitmap.Width, deviceBitmap.Height, canvasSize.width, canvasSize.height);
+                var position = PositionHelper.getPosition(device.alignX, device.alignY,deviceBitmap.Width, deviceBitmap.Height, canvasSize);
                 if (device.rightPart == true) {
                     position.x = -(canvasSize.width - position.x);
                 }
