@@ -2,8 +2,8 @@
 using SkiaSharp;
 namespace SSCreator {
     public class SSBackgroundGenerator {
-        public SSBackground background;
-        public SSSize canvasSize;
+        private SSBackground background;
+        private SSSize canvasSize;
         public SSBackgroundGenerator(SSBackground background, SSSize canvasSize) {
             this.background = background;
             this.canvasSize = canvasSize;
@@ -35,8 +35,7 @@ namespace SSCreator {
         }
 
         private void drawSolidBackground(SKCanvas canvas) {
-            SKColor color;
-            SKColor.TryParse(background.color.ToString(), out color);
+            SKColor.TryParse(background.color, out SKColor color);
             canvas.Clear(color);
         }
     }

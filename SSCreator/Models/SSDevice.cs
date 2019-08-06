@@ -8,8 +8,8 @@ namespace SSCreator {
         public string framePath;
         public double frameScale;
         public SSPosition? position;
-        public AlignDevice alignX;
-        public AlignDevice alignY;
+        public SSAlign alignX;
+        public SSAlign alignY;
         public SSPosition? screenOffset;
         public double? rotation;
         public SSSize? screenSize;
@@ -33,20 +33,20 @@ namespace SSCreator {
         public SSPosition getPosition(int deviceWidth, int deviceHeight, int canvasWidth, int canvasHeight) {
             var calculatedPos = new SSPosition(this.position?.x ?? 0, this.position?.y ?? 0);
             if (alignX != null) {
-                if (alignX.style == AlignKeys.center) {
+                if (alignX.style == AlignKeys.Center) {
                     calculatedPos.x = (canvasWidth - deviceWidth) / 2;
-                } else if (alignX.style == AlignKeys.left) {
+                } else if (alignX.style == AlignKeys.Left) {
                     calculatedPos.x = alignX.value;
-                } else if (alignX.style == AlignKeys.right) {
+                } else if (alignX.style == AlignKeys.Right) {
                     calculatedPos.x = canvasWidth - deviceWidth - alignX.value;
                 }
             }
             if (alignY != null) {
-                if (alignY.style == AlignKeys.center) {
+                if (alignY.style == AlignKeys.Center) {
                     calculatedPos.y = (canvasHeight - deviceHeight) / 2;
-                } else if (alignY.style == AlignKeys.top) {
+                } else if (alignY.style == AlignKeys.Top) {
                     calculatedPos.y = alignY.value;
-                } else if (alignY.style == AlignKeys.bottom) {
+                } else if (alignY.style == AlignKeys.Bottom) {
                     calculatedPos.y = canvasHeight - deviceHeight - alignY.value;
                 }
             }
@@ -55,16 +55,16 @@ namespace SSCreator {
     }
 
     public enum AlignKeys {
-        left,
-        right,
-        top,
-        bottom,
-        center
+        Left,
+        Right,
+        Top,
+        Bottom,
+        Center
     }
 
-    public class AlignDevice {
+    public class SSAlign {
         [JsonConverter(typeof(StringEnumConverter))]
-        public AlignKeys style = AlignKeys.center;
+        public AlignKeys style = AlignKeys.Center;
         public int value = 0;
     }
 }

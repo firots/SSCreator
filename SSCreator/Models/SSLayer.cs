@@ -3,6 +3,7 @@ namespace SSCreator {
     public class SSLayer: IComparable<SSLayer> {
         public int id;
         public SSDevice[] devices;
+        public SSText[] texts;
         
         public void setDeviceOffsets() {
             foreach (SSDevice device in devices) {

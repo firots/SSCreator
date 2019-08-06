@@ -3,7 +3,7 @@ using SkiaSharp;
 
 namespace SSCreator {
     class SSGenerator {
-        public SSModel model;
+        private SSModel model;
         public SSGenerator(SSModel model) {
             this.model = model;
             model.setAutoValues();
@@ -27,12 +27,18 @@ namespace SSCreator {
         private void drawLayers(SKCanvas canvas) {
             foreach(SSLayer layer in model.layers) {
                 drawDevices(canvas, layer);
+                drawTexts(canvas, layer);
             }
         }
 
         private void drawDevices(SKCanvas canvas, SSLayer layer) {
             SSDeviceGenerator deviceGenerator = new SSDeviceGenerator(layer.devices, model.canvasSize);
             deviceGenerator.drawDevices(canvas);
+        }
+
+        private void drawTexts(SKCanvas canvas, SSLayer layer) {
+            SSTextGenerator textGenerator = new SSTextGenerator(layer.texts, model.canvasSize);
+            textGenerator.drawTexts(canvas);
         }
     }
 }

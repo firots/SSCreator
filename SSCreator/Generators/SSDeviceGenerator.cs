@@ -3,8 +3,8 @@ using SkiaSharp;
 namespace SSCreator {
 
     public class SSDeviceGenerator {
-        public SSDevice[] devices;
-        public SSSize canvasSize;
+        private SSDevice[] devices;
+        private SSSize canvasSize;
         public SSDeviceGenerator(SSDevice[] devices, SSSize canvasSize) {
             this.devices = devices;
             this.canvasSize = canvasSize;
