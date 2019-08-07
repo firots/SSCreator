@@ -26,9 +26,15 @@ namespace SSCreator {
 
         private void drawLayers(SKCanvas canvas) {
             foreach(SSLayer layer in model.layers) {
+                drawShapes(canvas, layer);
                 drawDevices(canvas, layer);
                 drawTexts(canvas, layer);
             }
+        }
+
+        private void drawShapes(SKCanvas canvas, SSLayer layer) {
+            SSShapeGenerator shapeGenerator = new SSShapeGenerator(layer.shapes, model.canvasSize);
+            shapeGenerator.drawShapes(canvas);
         }
 
         private void drawDevices(SKCanvas canvas, SSLayer layer) {

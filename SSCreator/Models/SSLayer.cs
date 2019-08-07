@@ -4,6 +4,7 @@ namespace SSCreator {
         public int id;
         public SSDevice[] devices;
         public SSText[] texts;
+        public SSShape[] shapes;
         
         public void setDeviceOffsets() {
             foreach (SSDevice device in devices) {

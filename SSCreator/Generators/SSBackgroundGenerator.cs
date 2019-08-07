@@ -10,9 +10,9 @@ namespace SSCreator {
         }
 
         public void drawBackground(SKCanvas canvas) {
-            if (background.type == SSBackgroundType.solid) {
+            if (background.type == SSBackgroundType.Solid) {
                 drawSolidBackground(canvas);
-            } else if (background.type == SSBackgroundType.image) {
+            } else if (background.type == SSBackgroundType.Image) {
                 drawImageBackground(canvas);
             }
         }
