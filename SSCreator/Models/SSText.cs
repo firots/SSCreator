@@ -12,7 +12,6 @@ namespace SSCreator {
         public SSAlign alignY;
         [JsonConverter(typeof(StringEnumConverter))]
         public SKTextAlign textAlign;
-        public float? rotation;
 
         public SSPosition getPosition(int textWidth, int textHeight, int canvasWidth, int canvasHeight) {
             return new SSPosition(600, 300);

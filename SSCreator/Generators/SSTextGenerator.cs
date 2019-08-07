@@ -27,14 +27,7 @@ namespace SSCreator {
                 var width = paint.MeasureText(text.text);
                 var position = PositionHelper.getPosition(text.alignX, text.alignY, width, height, canvasSize);
                 position.y += text.fontSize;
-                if (text.rotation.HasValue && text.rotation > 0) {
-                    canvas.Save();
-                    canvas.RotateDegrees((float)text.rotation);
-                    canvas.DrawText(text.text, position.x, position.y, paint);
-                    canvas.Restore();
-                } else {
-                    canvas.DrawText(text.text, position.x, position.y, paint);
-                }
+                canvas.DrawText(text.text, position.x, position.y, paint);
             }
         }
 
