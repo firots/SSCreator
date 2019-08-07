@@ -29,14 +29,24 @@ namespace SSCreator {
 
         private void drawRectangle(SSShape rectangle, SKCanvas canvas) {
             using (var paint = new SKPaint()) {
-                SKColor.TryParse(rectangle.fillColor, out SKColor color);
-                paint.Color = color;
                 paint.IsAntialias = true;
 
                 SKRect rect = new SKRect();
                 rect.Size = new SKSize(rectangle.size.width, rectangle.size.height);
                 var position = PositionHelper.getPosition(rectangle.alignX, rectangle.alignY, rect.Width, rect.Height, canvasSize);
                 rect.Location = new SKPoint(position.x, position.y);
+                
+                if (rectangle.fillStyle == FillStyle.Solid) {
+                    SKColor.TryParse(rectangle.fillColor, out SKColor color);
+                    paint.Color = color;
+                } else if (rectangle.fillStyle == FillStyle.Gradient)  {
+                    paint.Shader = SKShader.CreateLinearGradient(
+                    new SKPoint(rect.Left, rect.Top),
+                    new SKPoint(rect.Right, rect.Bottom),
+                    new SKColor[] { SKColors.Red, SKColors.Blue },
+                    new float[] { 0, 1 },
+                    SKShaderTileMode.Repeat);
+                } 
                 canvas.DrawRect(rect, paint);
             }  
         }

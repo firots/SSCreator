@@ -14,6 +14,7 @@ namespace SSCreator {
         public SSSize size;
         [JsonConverter(typeof(StringEnumConverter))]
         public Stretch? stretch;
+        public SSGradient? gradient;
 
 
         public void setSize(SSSize canvasSize) {
