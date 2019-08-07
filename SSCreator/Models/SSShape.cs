@@ -12,20 +12,19 @@ namespace SSCreator {
         public SSAlign alignY;
         public int? diameter;
         public SSSize size;
-        [JsonConverter(typeof(StringEnumConverter))]
-        public Stretch? stretch;
+        public bool? fillX;
+        public bool? fillY;
         public SSGradient? gradient;
 
 
         public void setSize(SSSize canvasSize) {
-            if (stretch != null) {
-                if (stretch == Stretch.X) {
-                    size.width = canvasSize.width;
-                    alignX.style = AlignKeys.Center;
-                } else {
-                    size.height = canvasSize.height;
-                    alignY.style = AlignKeys.Center;
-                }
+            if (fillX == true) {
+                size.width = canvasSize.width;
+                alignX.style = AlignKeys.Center;
+            }
+            if (fillY == true) {
+                size.height = canvasSize.height;
+                alignY.style = AlignKeys.Center;
             }
         }
     }
@@ -38,10 +37,5 @@ namespace SSCreator {
     public enum ShapeType {
         Rectangle,
         Circle
-    }
-
-    public enum Stretch {
-        X,
-        Y
     }
 }

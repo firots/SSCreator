@@ -8,11 +8,13 @@ namespace SSCreator {
         public string color;
         public string imagePath;
         public float? blur;
+        public SSGradient? gradient;
     }
 
     public enum SSBackgroundType {
         Adaptive,
         Solid,
-        Image
+        Image,
+        Gradient
     }
 }

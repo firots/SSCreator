@@ -14,6 +14,8 @@ namespace SSCreator {
                 drawSolidBackground(canvas);
             } else if (background.type == SSBackgroundType.Image) {
                 drawImageBackground(canvas);
+            } else if (background.type == SSBackgroundType.Gradient) {
+                drawGradientBackground(canvas);
             }
         }
 
@@ -37,6 +39,22 @@ namespace SSCreator {
         private void drawSolidBackground(SKCanvas canvas) {
             SKColor.TryParse(background.color, out SKColor color);
             canvas.Clear(color);
+        }
+
+        private void drawGradientBackground(SKCanvas canvas) {
+            SSShape gradientBg = new SSShape {
+                size = canvasSize,
+                alignX = new SSAlign(),
+                alignY = new SSAlign(),
+                fillX = true,
+                fillY = true,
+                type = ShapeType.Rectangle,
+                fillStyle = FillStyle.Gradient,
+                gradient = background.gradient
+            };
+            gradientBg.setSize(canvasSize);
+            SSShapeGenerator shapeGenerator = new SSShapeGenerator(new SSShape[] { gradientBg }, canvasSize);
+            shapeGenerator.drawShapes(canvas);
         }
     }
 }
