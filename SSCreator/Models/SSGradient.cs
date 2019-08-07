@@ -3,11 +3,11 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 namespace SSCreator {
     public struct SSGradient {
-        string[] colors;
+        public string[] colors;
         [JsonConverter(typeof(StringEnumConverter))]
-        SSGradientDirection startPoint;
+        public SSGradientDirection startPoint;
         [JsonConverter(typeof(StringEnumConverter))]
-        SSGradientDirection endPoint;
+        public SSGradientDirection endPoint;
     }
 
     public enum SSGradientDirection {

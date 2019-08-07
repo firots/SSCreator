@@ -40,12 +40,9 @@ namespace SSCreator {
                     SKColor.TryParse(rectangle.fillColor, out SKColor color);
                     paint.Color = color;
                 } else if (rectangle.fillStyle == FillStyle.Gradient)  {
-                    paint.Shader = SKShader.CreateLinearGradient(
-                    new SKPoint(rect.Left, rect.Top),
-                    new SKPoint(rect.Right, rect.Bottom),
-                    new SKColor[] { SKColors.Red, SKColors.Blue },
-                    new float[] { 0, 1 },
-                    SKShaderTileMode.Repeat);
+                    var startPoint = GradientHelper.getRectPoint(rect, (SSGradientDirection)rectangle.gradient?.startPoint);
+                    var endPoint = GradientHelper.getRectPoint(rect, (SSGradientDirection)rectangle.gradient?.endPoint);
+                    paint.Shader = GradientHelper.createGradient((SSGradient)rectangle.gradient, startPoint, endPoint);
                 } 
                 canvas.DrawRect(rect, paint);
             }  
