@@ -28,7 +28,7 @@ namespace SSCreator {
                 foreach (string line in text.lines) {
                     var height = text.fontSize;
                     var width = paint.MeasureText(line);
-                    var position = PositionHelper.getPosition(text.alignX, text.alignY, width, height, canvasSize);
+                    var position = PositionHelper.getPosition(text.alignX, text.alignY, 0, height, canvasSize);
                     position.y = text.fontSize + (text.fontSize * lineNum);
                     canvas.DrawText(line, position.x, position.y, paint);
                     lineNum++;

@@ -33,8 +33,10 @@ namespace SSCreator {
         }
 
         private void drawShapes(SKCanvas canvas, SSLayer layer) {
-            SSShapeGenerator shapeGenerator = new SSShapeGenerator(layer.shapes, model.canvasSize);
-            shapeGenerator.drawShapes(canvas);
+            if (layer.shapes != null && layer.shapes.Length > 0) {
+                SSShapeGenerator shapeGenerator = new SSShapeGenerator(layer.shapes, model.canvasSize);
+                shapeGenerator.drawShapes(canvas);
+            }
         }
 
         private void drawDevices(SKCanvas canvas, SSLayer layer) {
@@ -43,8 +45,11 @@ namespace SSCreator {
         }
 
         private void drawTexts(SKCanvas canvas, SSLayer layer) {
-            SSTextGenerator textGenerator = new SSTextGenerator(layer.texts, model.canvasSize);
-            textGenerator.drawTexts(canvas);
+            if (layer.texts != null && layer.texts.Length > 0) {
+                SSTextGenerator textGenerator = new SSTextGenerator(layer.texts, model.canvasSize);
+                textGenerator.drawTexts(canvas);
+            }
+
         }
     }
 }
