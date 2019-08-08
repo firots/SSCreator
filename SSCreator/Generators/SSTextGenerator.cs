@@ -26,10 +26,10 @@ namespace SSCreator {
                 paint.Color = color;
                 var lineNum = 0;
                 foreach (string line in text.lines) {
-                    var height = text.fontSize;
+                    float height = text.fontSize;
                     var width = paint.MeasureText(line);
-                    var position = PositionHelper.getPosition(text.alignX, text.alignY, 0, height, canvasSize);
-                    position.y = text.fontSize + (text.fontSize * lineNum);
+                    SSPosition position = PositionHelper.getPosition(text.alignX, text.alignY, 0, height, canvasSize);
+                    position.y = position.y + text.fontSize + (text.fontSize * lineNum);
                     canvas.DrawText(line, position.x, position.y, paint);
                     lineNum++;
                 }

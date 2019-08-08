@@ -6,21 +6,31 @@ namespace SSCreator {
         public static SSPosition getPosition(SSAlign alignX, SSAlign alignY, float width, float height, SSSize canvasSize) {
             var calculatedPos = new SSPosition(0, 0);
             if (alignX != null) {
-                if (alignX.style == AlignKeys.Center) {
-                    calculatedPos.x = (canvasSize.width - width) / 2;
-                } else if (alignX.style == AlignKeys.Left) {
-                    calculatedPos.x = alignX.value;
-                } else if (alignX.style == AlignKeys.Right) {
-                    calculatedPos.x = canvasSize.width - width - alignX.value;
+                switch (alignX.style)
+                {
+                    case AlignKeys.Center:
+                        calculatedPos.x = (canvasSize.width - width) / 2;
+                        break;
+                    case AlignKeys.Left:
+                        calculatedPos.x = alignX.value;
+                        break;
+                    case AlignKeys.Right:
+                        calculatedPos.x = canvasSize.width - width - alignX.value;
+                        break;
                 }
             }
             if (alignY != null) {
-                if (alignY.style == AlignKeys.Center) {
-                    calculatedPos.y = (canvasSize.height - height) / 2;
-                } else if (alignY.style == AlignKeys.Top) {
-                    calculatedPos.y = alignY.value;
-                } else if (alignY.style == AlignKeys.Bottom) {
-                    calculatedPos.y = canvasSize.height - height - alignY.value;
+                switch (alignY.style)
+                {
+                    case AlignKeys.Center:
+                        calculatedPos.y = (canvasSize.height - height) / 2;
+                        break;
+                    case AlignKeys.Top:
+                        calculatedPos.y = alignY.value;
+                        break;
+                    case AlignKeys.Bottom:
+                        calculatedPos.y = canvasSize.height - height - alignY.value;
+                        break;
                 }
             }
             return calculatedPos;
@@ -38,6 +48,6 @@ namespace SSCreator {
     public class SSAlign {
         [JsonConverter(typeof(StringEnumConverter))]
         public AlignKeys style = AlignKeys.Center;
-        public int value = 0;
+        public int value;
     }
 }
