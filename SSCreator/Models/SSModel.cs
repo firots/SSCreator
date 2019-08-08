@@ -3,9 +3,9 @@ using System.IO;
 using System.Text;
 using System.Diagnostics;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
-using System.Linq;
+using SkiaSharp;
 
 namespace SSCreator {
     public class SSModel {
@@ -13,6 +13,9 @@ namespace SSCreator {
         public DeviceModel? canvasModel;
         public SSBackground background;
         public string savePath;
+        [JsonConverter(typeof(StringEnumConverter))]
+        public SKEncodedImageFormat encoding;
+
         public List<SSLayer> layers = new List<SSLayer>();
 
         public void save(string path) {

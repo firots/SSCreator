@@ -12,7 +12,8 @@ namespace SSCreator {
             return bitmap.Resize(info, SKFilterQuality.High);
         }
 
-        public static void saveBitmap(SKBitmap bitmap, string path) {
+        public static void saveBitmap(SKBitmap bitmap, string path, SKEncodedImageFormat encoding) {
+               path =  Path.ChangeExtension(path, encoding.ToString().ToLower());
             using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write)) {
                 SKData data = SKImage.FromBitmap(bitmap).Encode(SKEncodedImageFormat.Jpeg, 100);
                 data.SaveTo(fs);

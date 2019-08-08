@@ -15,7 +15,9 @@ namespace SSCreator {
                 drawBackground(canvas);
                 drawLayers(canvas);
             }
-            SkiaHelper.saveBitmap(SS, model.savePath);
+            SKBitmap downScaled = SkiaHelper.scaleBitmap(SS, 0.3);
+            SkiaHelper.saveBitmap(downScaled, model.savePath + "_downscaled", model.encoding);
+            SkiaHelper.saveBitmap(SS, model.savePath, model.encoding);
             Console.WriteLine("SS saved to " + model.savePath);
         }
 
