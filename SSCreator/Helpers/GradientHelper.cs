@@ -7,7 +7,7 @@ namespace SSCreator {
                     startPoint,
                     endPoint,
                     getColors(gradient.colors),
-                    getColorOrder(gradient.colors),
+                    null,
                     SKShaderTileMode.Repeat);
         }
 
@@ -18,15 +18,6 @@ namespace SSCreator {
                 skColors[i] = color;
             }
             return skColors;
-        }
-
-        private static float[] getColorOrder(string[] colors) {
-            float[] colorOrder = new float[colors.Length];
-            for (int i = 0; i < colors.Length; i++) {
-                SKColor.TryParse(colors[i], out SKColor color);
-                colorOrder[i] = i;
-            }
-            return colorOrder;
         }
 
         public static SKPoint getRectPoint(SKRect rect, SSGradientDirection point) {
