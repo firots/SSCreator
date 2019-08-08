@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 namespace SSCreator {
     public class SSText {
-        public string text;
+        public string[] lines;
         public string fontName;
         public float fontSize;
         public string color;

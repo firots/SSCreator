@@ -21,13 +21,19 @@ namespace SSCreator {
                 paint.TextSize = text.fontSize;
                 paint.IsAntialias = true;
                 paint.Typeface = getFont(text.fontName);
+                paint.TextAlign = text.textAlign;
                 SKColor.TryParse(text.color, out SKColor color);
                 paint.Color = color;
-                var height = text.fontSize;
-                var width = paint.MeasureText(text.text);
-                var position = PositionHelper.getPosition(text.alignX, text.alignY, width, height, canvasSize);
-                position.y += text.fontSize;
-                canvas.DrawText(text.text, position.x, position.y, paint);
+                var lineNum = 0;
+                foreach (string line in text.lines) {
+                    var height = text.fontSize;
+                    var width = paint.MeasureText(line);
+                    var position = PositionHelper.getPosition(text.alignX, text.alignY, width, height, canvasSize);
+                    position.y = text.fontSize + (text.fontSize * lineNum);
+                    canvas.DrawText(line, position.x, position.y, paint);
+                    lineNum++;
+                }
+
             }
         }
 
