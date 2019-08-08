@@ -21,14 +21,16 @@ namespace SSCreator {
         }
 
         public static SKPoint getRectPoint(SKRect rect, SSGradientDirection point) {
-            if (point == SSGradientDirection.TopLeft) {
-                return new SKPoint(rect.Left, rect.Top);
-            } else if (point == SSGradientDirection.TopRight) {
-                return new SKPoint(rect.Right, rect.Top);
-            } else if (point == SSGradientDirection.BottomLeft) {
-                return new SKPoint(rect.Left, rect.Bottom);
-            } else {
-                return new SKPoint(rect.Right, rect.Bottom);
+            switch (point)
+            {
+                case SSGradientDirection.TopLeft:
+                    return new SKPoint(rect.Left, rect.Top);
+                case SSGradientDirection.TopRight:
+                    return new SKPoint(rect.Right, rect.Top);
+                case SSGradientDirection.BottomLeft:
+                    return new SKPoint(rect.Left, rect.Bottom);
+                default:
+                    return new SKPoint(rect.Right, rect.Bottom);
             }
         }
     }
