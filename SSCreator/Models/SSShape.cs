@@ -8,8 +8,8 @@ namespace SSCreator {
         [JsonConverter(typeof(StringEnumConverter))]
         public FillStyle fillStyle = FillStyle.Solid;
         public string fillColor;
-        public SSAlign alignX;
-        public SSAlign alignY;
+        public SSAlign alignX = new SSAlign();
+        public SSAlign alignY = new SSAlign();
         public int? diameter;
         public SSSize size;
         public bool? fillX;

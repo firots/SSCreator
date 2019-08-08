@@ -10,12 +10,17 @@ namespace SSCreator {
         }
 
         public void drawBackground(SKCanvas canvas) {
-            if (background.type == SSBackgroundType.Solid) {
-                drawSolidBackground(canvas);
-            } else if (background.type == SSBackgroundType.Image) {
-                drawImageBackground(canvas);
-            } else if (background.type == SSBackgroundType.Gradient) {
-                drawGradientBackground(canvas);
+            switch (background.type)
+            {
+                case SSBackgroundType.Solid:
+                    drawSolidBackground(canvas);
+                    break;
+                case SSBackgroundType.Image:
+                    drawImageBackground(canvas);
+                    break;
+                case SSBackgroundType.Gradient:
+                    drawGradientBackground(canvas);
+                    break;
             }
         }
 
@@ -44,8 +49,6 @@ namespace SSCreator {
         private void drawGradientBackground(SKCanvas canvas) {
             SSShape gradientBg = new SSShape {
                 size = canvasSize,
-                alignX = new SSAlign(),
-                alignY = new SSAlign(),
                 fillX = true,
                 fillY = true,
                 type = ShapeType.Rectangle,

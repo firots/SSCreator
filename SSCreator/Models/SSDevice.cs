@@ -7,8 +7,8 @@ namespace SSCreator {
         public DeviceModel model;
         public string framePath;
         public double frameScale;
-        public SSAlign alignX;
-        public SSAlign alignY;
+        public SSAlign alignX = new SSAlign();
+        public SSAlign alignY = new SSAlign();
         public SSPosition? screenOffset;
         public double? rotation;
         public SSSize? screenSize;
@@ -28,7 +28,5 @@ namespace SSCreator {
                 }
             }
         }
-        
-
     }
 }

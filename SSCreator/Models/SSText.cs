@@ -8,8 +8,8 @@ namespace SSCreator {
         public string fontName;
         public float fontSize;
         public string color;
-        public SSAlign alignX;
-        public SSAlign alignY;
+        public SSAlign alignX = new SSAlign();
+        public SSAlign alignY = new SSAlign();
         [JsonConverter(typeof(StringEnumConverter))]
         public SKTextAlign textAlign;
 
