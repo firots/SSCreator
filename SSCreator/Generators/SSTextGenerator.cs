@@ -54,7 +54,6 @@ namespace SSCreator {
 
         private SSPosition drawLabel(SSLabel label, int lineNum, SKCanvas canvas, SSPosition position) {
             using (SKPaint paint = new SKPaint()) {
-                Print.Warning(label.text + position.x + position.y);
                 paint.TextSize = label.fontSize;
                 paint.IsAntialias = true;
                 paint.Typeface = getFont(label.fontName);
