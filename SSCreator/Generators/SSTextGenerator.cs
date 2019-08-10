@@ -17,23 +17,53 @@ namespace SSCreator {
         }
 
         private void drawText(SSText text, SKCanvas canvas) {
-            using (var paint = new SKPaint()) {
-                paint.TextSize = text.fontSize;
-                paint.IsAntialias = true;
-                paint.Typeface = getFont(text.fontName);
-                paint.TextAlign = text.textAlign;
-                SKColor.TryParse(text.color, out SKColor color);
-                paint.Color = color;
-                var lineNum = 0;
-                foreach (string line in text.lines) {
-                    float height = text.fontSize;
-                    var width = paint.MeasureText(line);
-                    SSPosition position = PositionHelper.getPosition(text.alignX, text.alignY, 0, height, canvasSize);
-                    position.y = position.y + text.fontSize + (text.fontSize * lineNum);
-                    canvas.DrawText(line, position.x, position.y, paint);
-                    lineNum++;
+            var lineNum = 0;
+            float textheight = getTextHeight(text);
+            SSPosition startPoint = PositionHelper.getPosition(text.alignX, text.alignY, 0, textheight, canvasSize);
+            SSPosition position = startPoint;
+            foreach (SSLine line in text.lines) {
+                LineProps lineProps = calculateLineProps(line);
+                if (text.alignX.style == AlignKeys.Center) {
+                    position.x -= (lineProps.width / 2);
+                } else if (text.alignX.style == AlignKeys.Right) {
+                    position.x -= lineProps.width;
                 }
+                if (lineNum == 0) {
+                    position.y += lineProps.maxHeight;
+                }
+                position.y += lineProps.maxHeight * lineNum;
+                drawLine(line, lineNum, position, canvas);
+                lineNum++;
+                position.x = startPoint.x;
+            }
+        }
 
+        private float getTextHeight(SSText text) {
+            float height = 0;
+            foreach (SSLine line in text.lines) {
+                height += calculateLineProps(line).maxHeight;
+            }
+            return height;
+        }
+
+        private void drawLine(SSLine line, int lineNum, SSPosition position, SKCanvas canvas) {
+            foreach (SSLabel label in line.labels) {
+                position = drawLabel(label, lineNum, canvas, position);
+            }
+        }
+
+        private SSPosition drawLabel(SSLabel label, int lineNum, SKCanvas canvas, SSPosition position) {
+            using (SKPaint paint = new SKPaint()) {
+                Print.Warning(label.text + position.x + position.y);
+                paint.TextSize = label.fontSize;
+                paint.IsAntialias = true;
+                paint.Typeface = getFont(label.fontName);
+                SKColor.TryParse(label.color, out SKColor color);
+                paint.Color = color;
+                float height = label.fontSize;
+                canvas.DrawText(label.text, position.x, position.y, paint);
+                position.x += paint.MeasureText(label.text);
+                return position;
             }
         }
 
@@ -48,6 +78,32 @@ namespace SSCreator {
                 Print.Error(ex.Message);
                 return SKTypeface.FromFamilyName("Roboto");
             }
+        }
+
+        private LineProps calculateLineProps(SSLine line) {
+            LineProps lineProps = new LineProps(0, 0);
+            foreach (SSLabel label in line.labels) {
+                using (SKPaint paint = new SKPaint()) {
+                    paint.TextSize = label.fontSize;
+                    paint.IsAntialias = true;
+                    paint.Typeface = getFont(label.fontName);
+                    lineProps.width += paint.MeasureText(label.text);
+                    if (label.fontSize > lineProps.maxHeight) {
+                        lineProps.maxHeight = label.fontSize;
+                    }
+                }
+            }
+            return lineProps;
+        }
+    }
+
+    public struct LineProps {
+        public float maxHeight;
+        public float width;
+
+        public LineProps(float maxHeight, float width) {
+            this.maxHeight = maxHeight;
+            this.width = width;
         }
     }
 }
