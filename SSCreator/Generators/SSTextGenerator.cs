@@ -32,7 +32,7 @@ namespace SSCreator {
                     position.y += lineProps.maxHeight;
                 }
                 position.y += lineProps.maxHeight * lineNum;
-                drawLine(line, lineNum, position, canvas);
+                drawLine(line, position, canvas);
                 lineNum++;
                 position.x = startPoint.x;
             }
@@ -46,13 +46,13 @@ namespace SSCreator {
             return height;
         }
 
-        private void drawLine(SSLine line, int lineNum, SSPosition position, SKCanvas canvas) {
+        private void drawLine(SSLine line, SSPosition position, SKCanvas canvas) {
             foreach (SSLabel label in line.labels) {
-                position = drawLabel(label, lineNum, canvas, position);
+                position = drawLabel(label, canvas, position);
             }
         }
 
-        private SSPosition drawLabel(SSLabel label, int lineNum, SKCanvas canvas, SSPosition position) {
+        private SSPosition drawLabel(SSLabel label, SKCanvas canvas, SSPosition position) {
             using (SKPaint paint = new SKPaint()) {
                 paint.TextSize = label.fontSize;
                 paint.IsAntialias = true;
