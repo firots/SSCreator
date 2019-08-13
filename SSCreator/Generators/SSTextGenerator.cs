@@ -28,10 +28,7 @@ namespace SSCreator {
                 } else if (text.alignX.style == AlignKeys.Right) {
                     position.x -= lineProps.width;
                 }
-                if (lineNum == 0) {
-                    position.y += lineProps.maxHeight;
-                }
-                position.y += lineProps.maxHeight * lineNum;
+                position.y += lineProps.maxHeight;
                 drawLine(line, position, canvas);
                 lineNum++;
                 position.x = startPoint.x;
