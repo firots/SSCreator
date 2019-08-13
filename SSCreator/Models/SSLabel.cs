@@ -5,5 +5,6 @@ namespace SSCreator {
         public string fontName;
         public float fontSize;
         public string color;
+        public byte alpha = 255;
     }
 }

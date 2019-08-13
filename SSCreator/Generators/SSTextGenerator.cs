@@ -55,6 +55,7 @@ namespace SSCreator {
                 paint.IsAntialias = true;
                 paint.Typeface = getFont(label.fontName);
                 SKColor.TryParse(label.color, out SKColor color);
+                color = color.WithAlpha(label.alpha);
                 paint.Color = color;
                 float height = label.fontSize;
                 canvas.DrawText(label.text, position.x, position.y, paint);

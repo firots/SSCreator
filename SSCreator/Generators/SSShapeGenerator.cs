@@ -38,6 +38,7 @@ namespace SSCreator {
                 
                 if (rectangle.fillStyle == FillStyle.Solid) {
                     SKColor.TryParse(rectangle.fillColor, out SKColor color);
+                    color = color.WithAlpha(rectangle.alpha);
                     paint.Color = color;
                 } else if (rectangle.fillStyle == FillStyle.Gradient)  {
                     var startPoint = GradientHelper.getRectPoint(rect, (SSGradientDirection)rectangle.gradient?.startPoint);
