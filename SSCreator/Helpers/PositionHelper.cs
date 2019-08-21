@@ -9,7 +9,7 @@ namespace SSCreator {
                 switch (alignX.style)
                 {
                     case AlignKeys.Center:
-                        calculatedPos.x = (canvasSize.width - width) / 2;
+                        calculatedPos.x = ((canvasSize.width - width) / 2) + alignX.value;
                         break;
                     case AlignKeys.Left:
                         calculatedPos.x = alignX.value;
@@ -23,7 +23,7 @@ namespace SSCreator {
                 switch (alignY.style)
                 {
                     case AlignKeys.Center:
-                        calculatedPos.y = (canvasSize.height - height) / 2;
+                        calculatedPos.y = (canvasSize.height - height) / 2 + alignY.value;
                         break;
                     case AlignKeys.Top:
                         calculatedPos.y = alignY.value;
