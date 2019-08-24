@@ -55,8 +55,7 @@ namespace SSCreator {
         }
 
         private SKBitmap createFrame(SSDevice device) {
-            string framePath = FileHelper.getSSCreatorPath(device.framePath);
-            SKBitmap frameBitmap = SKBitmap.Decode(framePath);
+            SKBitmap frameBitmap = SKBitmap.Decode(device.framePath);
             frameBitmap = SkiaHelper.scaleBitmap(frameBitmap, device.frameScale);
             return frameBitmap;
         }
