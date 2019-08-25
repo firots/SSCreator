@@ -14,7 +14,7 @@ namespace SSCreator {
                     ss.WriteString("ss saved");
                 } catch(Exception ex) {
                     Print.Error(ex.Message);
-                    ss.WriteString("cannot generate screenshot");
+                    ss.WriteString("cannot generate ss");
                 }
             } else {
                 ss.WriteString("cannot parse json");
