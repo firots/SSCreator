@@ -53,7 +53,7 @@ namespace SSCreator {
             using (SKPaint paint = new SKPaint()) {
                 paint.TextSize = label.fontSize;
                 paint.IsAntialias = true;
-                paint.Typeface = getFont(label.fontName);
+                paint.Typeface = getFont(label);
                 SKColor.TryParse(label.color, out SKColor color);
                 color = color.WithAlpha(label.alpha);
                 paint.Color = color;
@@ -64,12 +64,13 @@ namespace SSCreator {
             }
         }
 
-        private SKTypeface getFont(string fontName) {
+        private SKTypeface getFont(SSLabel label) {
             try {
-                if (fontName.Contains(".ttf")) {
-                    return SKTypeface.FromFile(fontName);
+                if (label.fontName.Contains(".ttf")) {
+                    return SKTypeface.FromFile(label.fontName);
                 } else {
-                    return SKTypeface.FromFamilyName(fontName);
+                    return SKTypeface.FromFamilyName(label.fontName,
+                        label.styleWeight, label.styleWidth, label.styleSlant);
                 }
             } catch(Exception ex) {
                 Print.Error(ex.Message);
@@ -83,7 +84,7 @@ namespace SSCreator {
                 using (SKPaint paint = new SKPaint()) {
                     paint.TextSize = label.fontSize;
                     paint.IsAntialias = true;
-                    paint.Typeface = getFont(label.fontName);
+                    paint.Typeface = getFont(label);
                     lineProps.width += paint.MeasureText(label.text);
                     if (label.fontSize > lineProps.maxHeight) {
                         lineProps.maxHeight = label.fontSize;
