@@ -25,11 +25,19 @@ namespace SSCreator {
         }
 
         private void drawImageBackground(SKCanvas canvas) {
-            SKBitmap bgBitmap = SKBitmap.Decode(background.imagePath);
+            SKBitmap bgBitmap;
+
+            if (System.IO.File.Exists(background.imagePath)) {
+                bgBitmap = SKBitmap.Decode(background.imagePath);
+            } else {
+                bgBitmap = new SKBitmap(canvasSize.width,canvasSize.height,false);
+            }
+
             if (bgBitmap.Width != canvasSize.width || bgBitmap.Height != canvasSize.height) {
                 var info = new SKImageInfo(canvasSize.width, canvasSize.height);
                 bgBitmap = bgBitmap.Resize(info, SKFilterQuality.High);
             }
+
             if (background.blur.HasValue && background.blur != 0) {
                 var filter = SKImageFilter.CreateBlur((int)background.blur, (int)background.blur);
                 var paint = new SKPaint {

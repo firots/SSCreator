@@ -40,8 +40,13 @@ namespace SSCreator {
         }
 
         private SKBitmap createScreen(SSDevice device, SKCanvas canvas, int deviceId) {
-            SKBitmap ssBitmap = SKBitmap.Decode(device.screenshotPath);
             var screenSize = (SSSize)device.screenSize;
+            SKBitmap ssBitmap;
+            if (System.IO.File.Exists(device.screenshotPath)) {
+                ssBitmap = SKBitmap.Decode(device.screenshotPath);
+            } else {
+                ssBitmap = new SKBitmap(screenSize.width,screenSize.height,false);
+            }
             if (device.adaptiveBackground == true) {
                 drawAdaptiveBackground(canvas, ssBitmap);
             }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SSCreator;
+
 
 namespace SSCreatorAPI.Controllers
 {
@@ -14,7 +16,7 @@ namespace SSCreatorAPI.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "valuefff1", "value2" };
+            return new string[] { "SSCreator Working" };
         }
 
         // GET api/values/5
@@ -26,8 +28,12 @@ namespace SSCreatorAPI.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult Post([FromBody] SSBody body)
         {
+            Console.WriteLine(body.model.canvasModel);
+            SSGenerator SSG = new SSGenerator(body.model);
+            SSG.generate();
+            return Ok();
         }
 
         // PUT api/values/5

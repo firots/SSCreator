@@ -66,4 +66,8 @@ namespace SSCreator {
             }
         }
     }
+
+    public struct SSBody {
+        public SSModel model;
+    }
 }
