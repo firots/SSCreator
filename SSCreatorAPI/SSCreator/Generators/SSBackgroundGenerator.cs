@@ -25,14 +25,7 @@ namespace SSCreator {
         }
 
         private void drawImageBackground(SKCanvas canvas) {
-            SKBitmap bgBitmap;
-
-            if (System.IO.File.Exists(background.imagePath)) {
-                bgBitmap = SKBitmap.Decode(background.imagePath);
-            } else {
-                bgBitmap = new SKBitmap(canvasSize.width,canvasSize.height,false);
-            }
-
+            SKBitmap bgBitmap = SkiaHelper.createPersistentBitmap(background.imagePath, canvasSize.width, canvasSize.height);
             if (bgBitmap.Width != canvasSize.width || bgBitmap.Height != canvasSize.height) {
                 var info = new SKImageInfo(canvasSize.width, canvasSize.height);
                 bgBitmap = bgBitmap.Resize(info, SKFilterQuality.High);

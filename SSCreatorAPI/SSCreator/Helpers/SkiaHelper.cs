@@ -50,5 +50,15 @@ namespace SSCreator {
             }
             return foundation;
         }
+
+        public static SKBitmap createPersistentBitmap(string path, int width, int height) {
+            SKBitmap bitmap;
+            if (File.Exists(path)) {
+                bitmap = SKBitmap.Decode(path);
+            } else {
+                bitmap = new SKBitmap(width, height, false);
+            }
+            return bitmap;
+        }
     }
 }

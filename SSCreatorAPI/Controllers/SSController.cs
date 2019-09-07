@@ -31,9 +31,15 @@ namespace SSCreatorAPI.Controllers
         public ActionResult Post([FromBody] SSBody body)
         {
             Console.WriteLine(body.model.canvasModel);
-            SSGenerator SSG = new SSGenerator(body.model);
-            SSG.generate();
-            return Ok();
+            try {
+                SSGenerator SSG = new SSGenerator(body.model);
+                SSG.generate();
+                return Ok();
+            } catch {
+                return StatusCode(500, "check json file.");
+            }
+
+            
         }
 
         // PUT api/values/5

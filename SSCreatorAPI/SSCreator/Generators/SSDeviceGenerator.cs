@@ -1,5 +1,6 @@
 ﻿using System;
 using SkiaSharp;
+using System.IO;
 namespace SSCreator {
 
     public class SSDeviceGenerator {
@@ -41,12 +42,7 @@ namespace SSCreator {
 
         private SKBitmap createScreen(SSDevice device, SKCanvas canvas, int deviceId) {
             var screenSize = (SSSize)device.screenSize;
-            SKBitmap ssBitmap;
-            if (System.IO.File.Exists(device.screenshotPath)) {
-                ssBitmap = SKBitmap.Decode(device.screenshotPath);
-            } else {
-                ssBitmap = new SKBitmap(screenSize.width,screenSize.height,false);
-            }
+            SKBitmap ssBitmap = SkiaHelper.createPersistentBitmap(device.screenshotPath, screenSize.width, screenSize.height);
             if (device.adaptiveBackground == true) {
                 drawAdaptiveBackground(canvas, ssBitmap);
             }
@@ -60,7 +56,8 @@ namespace SSCreator {
         }
 
         private SKBitmap createFrame(SSDevice device) {
-            SKBitmap frameBitmap = SKBitmap.Decode(device.framePath);
+            var screenSize = (SSSize)device.screenSize;
+            SKBitmap frameBitmap = SkiaHelper.createPersistentBitmap(device.framePath, screenSize.width + 100, screenSize.height + 100);
             frameBitmap = SkiaHelper.scaleBitmap(frameBitmap, device.frameScale);
             return frameBitmap;
         }
