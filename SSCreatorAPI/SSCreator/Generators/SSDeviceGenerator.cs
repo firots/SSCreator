@@ -57,7 +57,8 @@ namespace SSCreator {
 
         private SKBitmap createFrame(SSDevice device) {
             var screenSize = (SSSize)device.screenSize;
-            SKBitmap frameBitmap = SkiaHelper.createPersistentBitmap(device.framePath, screenSize.width + 100, screenSize.height + 100);
+            var framePath = Path.Combine(Config.shared.appPath, "builder/public/static/frames", device.framePath);
+            SKBitmap frameBitmap = SkiaHelper.createPersistentBitmap(framePath, screenSize.width + 100, screenSize.height + 100);
             frameBitmap = SkiaHelper.scaleBitmap(frameBitmap, device.frameScale);
             return frameBitmap;
         }

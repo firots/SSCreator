@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -31,8 +32,12 @@ namespace SSCreatorAPI.Controllers
         public ActionResult Post([FromBody] SSBody body)
         {
             try {
+                var stopwatch = new Stopwatch();
+                stopwatch.Start();
                 SSGenerator SSG = new SSGenerator(body.model);
                 SSG.generate();
+                stopwatch.Stop();
+                Console.WriteLine("whole process took " + (Convert.ToDecimal(stopwatch.ElapsedMilliseconds) / 1000) + " seconds.");
                 return Ok();
             } catch {
                 return StatusCode(500, "check json file.");

@@ -14,7 +14,7 @@ namespace SSCreatorAPI
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine(args);
+            SSCreator.Config.load();
             CreateWebHostBuilder(args).Build().Run();
         }
 
