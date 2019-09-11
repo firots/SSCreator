@@ -31,11 +31,12 @@ namespace SSCreatorAPI.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] SSBody body)
         {
-            try {
+           try {
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
-                SSGenerator SSG = new SSGenerator(body.model);
-                SSG.generate();
+                using (SSGenerator SSG = new SSGenerator(body.model)) {
+                    SSG.generate();
+                }  
                 stopwatch.Stop();
                 Console.WriteLine("whole process took " + (Convert.ToDecimal(stopwatch.ElapsedMilliseconds) / 1000) + " seconds.");
                 return Ok();

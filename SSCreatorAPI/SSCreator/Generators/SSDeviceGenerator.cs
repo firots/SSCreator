@@ -1,6 +1,9 @@
 ﻿using System;
 using SkiaSharp;
 using System.IO;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace SSCreator {
 
     public class SSDeviceGenerator {
@@ -12,6 +15,12 @@ namespace SSCreator {
         }
 
         public void drawDevices(SKCanvas canvas) {
+            var tasks = new List<Task>();
+            foreach (SSDevice device in devices) {
+                tasks.Add(device.loadFrame());
+                tasks.Add(device.loadScreen());
+            }
+            Task.WaitAll(tasks.ToArray());
             int deviceId = 0;
             foreach (SSDevice device in devices) {
                 SKBitmap deviceBitmap = createDevice(device, canvas, deviceId);
@@ -41,7 +50,8 @@ namespace SSCreator {
         }
 
         private SKBitmap createScreen(SSDevice device, SKCanvas canvas, int deviceId) {
-            var screenSize = (SSSize)device.screenSize;
+            return device.screen;
+            /*var screenSize = (SSSize)device.screenSize;
             SKBitmap ssBitmap = SkiaHelper.createPersistentBitmap(device.screenshotPath, screenSize.width, screenSize.height);
             if (device.adaptiveBackground == true) {
                 drawAdaptiveBackground(canvas, ssBitmap);
@@ -52,15 +62,16 @@ namespace SSCreator {
                 ssBitmap = ssBitmap.Resize(info, SKFilterQuality.High);
             }
             ssBitmap = SkiaHelper.scaleBitmap(ssBitmap, device.frameScale);
-            return ssBitmap;
+            return ssBitmap;*/
         }
 
         private SKBitmap createFrame(SSDevice device) {
-            var screenSize = (SSSize)device.screenSize;
+            return device.frame;
+            /*var screenSize = (SSSize)device.screenSize;
             var framePath = Path.Combine(Config.shared.appPath, "builder/public/static/frames", device.framePath);
             SKBitmap frameBitmap = SkiaHelper.createPersistentBitmap(framePath, screenSize.width + 100, screenSize.height + 100);
             frameBitmap = SkiaHelper.scaleBitmap(frameBitmap, device.frameScale);
-            return frameBitmap;
+            return frameBitmap;*/
         }
 
         private void drawAdaptiveBackground(SKCanvas canvas, SKBitmap bitmap) {
