@@ -1,7 +1,7 @@
 ﻿using System;
 using SkiaSharp;
 namespace SSCreator {
-    public class SSBackgroundGenerator {
+    public class SSBackgroundGenerator: IDisposable {
         private SSBackground background;
         private SSSize canvasSize;
         public SSBackgroundGenerator(SSBackground background, SSSize canvasSize) {
@@ -10,8 +10,7 @@ namespace SSCreator {
         }
 
         public void drawBackground(SKCanvas canvas) {
-            switch (background.type)
-            {
+            switch (background.type) {
                 case SSBackgroundType.Solid:
                     drawSolidBackground(canvas);
                     break;
@@ -42,6 +41,20 @@ namespace SSCreator {
             }
         }
 
+        public void drawAdaptiveBackground(SKCanvas canvas, SKBitmap bitmap) {
+            if (background.type != SSBackgroundType.Adaptive) return;
+            if (bitmap.Width != canvasSize.width || bitmap.Height != canvasSize.height) {
+                Print.Warning("Adaptive background size is not compatible with screenshot size, resizing adaptive background...");
+                var info = new SKImageInfo(canvasSize.width, canvasSize.height);
+                bitmap = bitmap.Resize(info, SKFilterQuality.High);
+            }
+            var filter = SKImageFilter.CreateBlur(20, 20);
+            var paint = new SKPaint {
+                ImageFilter = filter
+            };
+            canvas.DrawBitmap(bitmap, new SKPoint(0, 0), paint);
+        }
+
         private void drawSolidBackground(SKCanvas canvas) {
             SKColor.TryParse(background.color, out SKColor color);
             canvas.Clear(color);
@@ -60,5 +73,38 @@ namespace SSCreator {
             SSShapeGenerator shapeGenerator = new SSShapeGenerator(new SSShape[] { gradientBg }, canvasSize);
             shapeGenerator.drawShapes(canvas);
         }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing) {
+            if (!disposedValue) {
+                if (disposing) {
+                    // TODO: dispose managed state (managed objects).
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+                // TODO: set large fields to null.
+
+                disposedValue = true;
+            }
+        }
+
+        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
+        // ~SSBackgroundGenerator()
+        // {
+        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+        //   Dispose(false);
+        // }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose() {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            // TODO: uncomment the following line if the finalizer is overridden above.
+            // GC.SuppressFinalize(this);
+        }
+        #endregion
+
     }
 }

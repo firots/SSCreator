@@ -38,7 +38,7 @@ namespace SSCreator {
             }
         }
 
-        public async Task loadScreen() {
+        public async Task loadFrame() {
             var task = Task.Run(() => {
                 var size = (SSSize)this.screenSize;
                 var path = Path.Combine(Config.shared.appPath, "builder/public/static/frames", framePath);
@@ -48,10 +48,11 @@ namespace SSCreator {
             await task;
         }
 
-        public async Task loadFrame() {
+        public async Task loadScreen(SKCanvas canvas, SSBackgroundGenerator backgroundGenerator) {
             var task = Task.Run(() => {
                 var size = (SSSize)screenSize;
                 SKBitmap ssBitmap = SkiaHelper.createPersistentBitmap(screenshotPath, size.width, size.height);
+                backgroundGenerator.drawAdaptiveBackground(canvas, ssBitmap);
                 if (size.width != ssBitmap.Width || size.height != ssBitmap.Height) {
                     Print.Warning("Screenshot size is wrong, resizing screenshot...");
                     var info = new SKImageInfo(size.width, size.height);

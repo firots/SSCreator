@@ -15,12 +15,6 @@ namespace SSCreator {
         }
 
         public void drawDevices(SKCanvas canvas) {
-            var tasks = new List<Task>();
-            foreach (SSDevice device in devices) {
-                tasks.Add(device.loadFrame());
-                tasks.Add(device.loadScreen());
-            }
-            Task.WaitAll(tasks.ToArray());
             int deviceId = 0;
             foreach (SSDevice device in devices) {
                 SKBitmap deviceBitmap = createDevice(device, canvas, deviceId);
@@ -72,19 +66,6 @@ namespace SSCreator {
             SKBitmap frameBitmap = SkiaHelper.createPersistentBitmap(framePath, screenSize.width + 100, screenSize.height + 100);
             frameBitmap = SkiaHelper.scaleBitmap(frameBitmap, device.frameScale);
             return frameBitmap;*/
-        }
-
-        private void drawAdaptiveBackground(SKCanvas canvas, SKBitmap bitmap) {
-            if (bitmap.Width != canvasSize.width || bitmap.Height != canvasSize.height) {
-                Print.Warning("Adaptive background size is not compatible with screenshot size, resizing adaptive background...");
-                var info = new SKImageInfo(canvasSize.width, canvasSize.height);
-                bitmap = bitmap.Resize(info, SKFilterQuality.High);
-            }
-            var filter = SKImageFilter.CreateBlur(20, 20);
-            var paint = new SKPaint {
-                ImageFilter = filter
-            };
-            canvas.DrawBitmap(bitmap, new SKPoint(0, 0), paint);
         }
     }
 }

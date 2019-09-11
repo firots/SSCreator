@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using SkiaSharp;
 
 namespace SSCreator {
@@ -12,16 +14,32 @@ namespace SSCreator {
         public void generate() {
             SKBitmap SS = new SKBitmap(model.canvasSize.width, model.canvasSize.height);
             using (SKCanvas canvas = new SKCanvas(SS)) {
-                drawBackground(canvas);
+                using (SSBackgroundGenerator bgGenerator = new SSBackgroundGenerator(model.background, model.canvasSize)) {
+                    loadAndDecodeBitmaps(canvas, bgGenerator);
+                }
                 drawLayers(canvas);
             }
             SkiaHelper.saveBitmap(SS, model.savePath, model.encoding);
             Console.WriteLine("SS saved to " + model.savePath);
         }
 
-        private void drawBackground(SKCanvas canvas) {
-            SSBackgroundGenerator bgGenerator = new SSBackgroundGenerator(model.background, model.canvasSize);
-            bgGenerator.drawBackground(canvas);
+        private void loadAndDecodeBitmaps(SKCanvas canvas, SSBackgroundGenerator backgroundGenerator) {
+            var tasks = new List<Task>();
+            tasks.Add(drawBackground(canvas, backgroundGenerator));
+            foreach (SSLayer layer in model.layers) {
+                foreach (SSDevice device in layer.devices) {
+                    tasks.Add(device.loadFrame());
+                    tasks.Add(device.loadScreen(canvas, backgroundGenerator));
+                }
+            }
+            Task.WaitAll(tasks.ToArray());
+        }
+
+        private async Task drawBackground(SKCanvas canvas,SSBackgroundGenerator backgroundGenerator) {
+            var task = Task.Run(() => {
+                backgroundGenerator.drawBackground(canvas);
+            });
+            await task;
         }
 
         private void drawLayers(SKCanvas canvas) {
