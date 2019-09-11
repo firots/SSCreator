@@ -29,18 +29,22 @@ namespace SSCreatorAPI.Controllers
 
         // POST api/values
         [HttpPost]
-        public ActionResult Post([FromBody] SSBody body)
+        public async Task <ActionResult> Post([FromBody] SSBody body)
         {
            try {
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
-                using (SSGenerator SSG = new SSGenerator(body.model)) {
-                    SSG.generate();
-                }  
+                var task = Task.Run(() => {
+                    using (SSGenerator SSG = new SSGenerator(body.model)) {
+                        SSG.generate();
+                    }
+                });
+                await task;
                 stopwatch.Stop();
                 Console.WriteLine("whole process took " + (Convert.ToDecimal(stopwatch.ElapsedMilliseconds) / 1000) + " seconds.");
                 return Ok();
             } catch {
+                Console.WriteLine("Cannot generate ss from given json.");
                 return StatusCode(500, "check json file.");
             }
         }
