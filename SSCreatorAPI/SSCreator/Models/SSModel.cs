@@ -43,10 +43,14 @@ namespace SSCreator {
         public void setAutoValues() {
             setDeviceOffsets();
             setCanvasSize();
+            setSavePath();
         }
 
+        private void setSavePath() {
+            savePath = Path.Combine(Config.shared.appPath, savePath);
+        }
 
-        public void setDeviceOffsets() {
+        private void setDeviceOffsets() {
             foreach (SSLayer layer in layers) {
                 layer.setDeviceOffsets();
             }
