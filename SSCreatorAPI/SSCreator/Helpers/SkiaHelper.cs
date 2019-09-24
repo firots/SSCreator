@@ -44,6 +44,7 @@ namespace SSCreator {
             SKBitmap firstBitmap = bitmaps[0].Item1;
             SKBitmap foundation = new SKBitmap(firstBitmap.Width, firstBitmap.Height);
             using (SKCanvas tempCanvas = new SKCanvas(foundation)) {
+                tempCanvas.Clear();
                 for (int i = bitmaps.Length - 1; i > -1; i--) {
                     tempCanvas.DrawBitmap(bitmaps[i].Item1, bitmaps[i].Item2);
                 }
