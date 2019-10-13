@@ -29,6 +29,9 @@ namespace SSCreator {
                     position.x -= lineProps.width;
                 }
                 position.y += lineProps.maxHeight;
+                if (lineNum > 0 ) {
+                    position.y += text.extraLineSpacing;
+                }
                 drawLine(line, position, canvas);
                 lineNum++;
                 position.x = startPoint.x;
