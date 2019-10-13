@@ -37,8 +37,9 @@ namespace SSCreator {
                 Tuple.Create(screenShot, new SKPoint(ssPosX, ssPosY))
             };
             SKBitmap deviceBitmap = SkiaHelper.overlayBitmaps(bitMapsToCombine);
-            if (device.rotation.HasValue) {
-                deviceBitmap = SkiaHelper.rotateBitmap(deviceBitmap, device.rotation ?? 0);
+            if (device.rotation.HasValue && device.rotation > 0) {
+                SKBitmap rotatedDeviceBitmap = SkiaHelper.rotateBitmap(deviceBitmap, device.rotation ?? 0);
+                return rotatedDeviceBitmap;
             }
             return deviceBitmap;
         }
